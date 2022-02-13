@@ -1,0 +1,28 @@
+---
+name: commit
+
+on:
+  push:
+
+jobs:
+  pylint:
+    name: Python lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: build
+        run: make build
+      - name: lint
+        run: make lint
+
+  test:
+    name: Pytest
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: build
+        run: make build
+      - name: test
+        run: make test
