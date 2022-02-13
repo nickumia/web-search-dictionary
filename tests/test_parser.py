@@ -17,5 +17,5 @@ def test_parser():
     assert parsed.xpath('/html/head/title')[0].tag == 'title'
     assert parsed.xpath('/html/head/title')[0].text == 'NLP'
     assert parsed.xpath('/html/body')[0].tag == 'body'
-    assert parsed.xpath('/html/body')[0].text == None
+    assert parsed.xpath('/html/body')[0].text is None
     assert parsed.xpath('/html/body/h1')[0].text == 'Awesome Test Heading 1'
