@@ -13,6 +13,8 @@ setup(
     """,
     author='nickumia',
     install_requires=[
+        'lxml',
+        'requests'
     ],
     packages=find_packages(include=['wsd', 'wsd.*'])
 )

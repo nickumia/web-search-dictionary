@@ -34,3 +34,6 @@ class Word():
 
     def getDefinitions(self):
         return self.definition
+
+    def getPronounciation(self):
+        return self.pronounciation
