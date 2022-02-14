@@ -7,6 +7,7 @@ POS_TAGS = [
     'noun',
     'adjective',
     'verb',
+    'adverb',
     'determiner'
 ]
 
@@ -17,7 +18,7 @@ MISC = ['G', 'o', 'g', 'l', 'e', 'Videos', 'Please click', 'here', 'All',
         'Related searches', 'Next &gt;', '&nbsp;-&nbsp;', 'Learn more',
         'Sign in', 'Settings', 'Privacy', 'Terms', 'People also ask',
         'See results about', '·', 'More results', 'Best dictionary website',
-        'Duration:']
+        'Duration:', 'Rating', 'View all']
 
 
 def LXML_preprocessHTML(web_response):
@@ -100,10 +101,13 @@ def notBad(possible_definition, pos, word):
         r'Example of ([a-z]|[A-z])+( .*)?',
         r'(Merriam-Webster|Vocabulary\.com|Dictionary(\.com)?|'
         r'Purdue Online Writing Lab|Merriam...|Urban|Webster\'s|'
-        r'Cambridge Advanced...|Best dictionary website)',
-        r'([a-z]|[A-Z]){3} [0-9]{2}, [0-9]{4}',
+        r'Cambridge Advanced...|Best dictionary website|In stock|'
+        r'Wikipedia)',
+        r'([a-z]|[A-Z]){3} [0-9]{1,2}, [0-9]{4}',
         r'[0-9]{1,2}:[0-9]{2}',
         r'(A Definition)? &amp; Meaning (-|\|) ',
+        r'(\$?[0-9]+\.[0-9]{1,2}|\([0-9]+\)|^[0-9]$)',
+        r'.*&#; Best Sellers &#;.*',
         r'.*&#8250;.*',
     ]
 
