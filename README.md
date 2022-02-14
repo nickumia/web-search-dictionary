@@ -51,6 +51,12 @@ for key, sense in entry.getDefinitions():
   call.  However, be wary making too many calls within a short time period.  The search engine or ISP or other middleman may
   begin to rate-limit or otherwise flag the connection.  This is not a known problem (hoewver, I will update if more details
   surface).
+  
+## Peers
+
+There is a javascript-version of the same idea: https://github.com/meetDeveloper/freeDictionaryAPI
+- It is a bit easier to [implement this](https://github.com/meetDeveloper/freeDictionaryAPI/blob/master/modules/dictionary.js#L37-L135) in javascript, since it's much more web-aware (js|html|css)
+- This didn't work for me since it would've been a completely separate service architecture to implement.  
 
 ## Contributing + Reporting
 
