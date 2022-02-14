@@ -7,7 +7,7 @@ POS_TAGS = [
     'noun',
     'adjective',
     'verb',
-    'determiner
+    'determiner'
 ]
 
 MISC = ['G', 'o', 'g', 'l', 'e', 'Videos', 'Please click', 'here', 'All',
