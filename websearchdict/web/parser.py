@@ -102,7 +102,7 @@ def notBad(possible_definition, pos, word):
         r'(Merriam-Webster|Vocabulary\.com|Dictionary(\.com)?|'
         r'Purdue Online Writing Lab|Merriam...|Urban|Webster\'s|'
         r'Cambridge Advanced...|Best dictionary website|In stock|'
-        r'Wikipedia)',
+        r'Wikipedia|Noun:)',
         r'([a-z]|[A-Z]){3} [0-9]{1,2}, [0-9]{4}',
         r'[0-9]{1,2}:[0-9]{2}',
         r'(A Definition)? &amp; Meaning (-|\|) ',
@@ -115,7 +115,7 @@ def notBad(possible_definition, pos, word):
         for nonsense in bad_phrases:
             possible_definition = re.sub(nonsense, '', possible_definition)
         if possible_definition not in ['', ' ']:
-            print(possible_definition)
-            print("_-_-_-_")
+            # print(possible_definition)
+            # print("_-_-_-_")
             return possible_definition
     return None
