@@ -45,6 +45,13 @@ for key, sense in entry.getDefinitions():
 # Definition [2]: how to pronounce s p e c i a l
 ```
 
+## Special Considerations
+
+- The library makes a new web request to the search engine for every `lookup` call.  It is a non-special, very generic http
+  call.  However, be wary making too many calls within a short time period.  The search engine or ISP or other middleman may
+  begin to rate-limit or otherwise flag the connection.  This is not a known problem (hoewver, I will update if more details
+  surface).
+
 ## Contributing + Reporting
 
 As shown in the example above, there may be unintended results from the lookup (i.e. "how to pronounce s p e c i a l").
