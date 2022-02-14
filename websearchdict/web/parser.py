@@ -6,7 +6,8 @@ import re
 POS_TAGS = [
     'noun',
     'adjective',
-    'verb'
+    'verb',
+    'determiner
 ]
 
 MISC = ['G', 'o', 'g', 'l', 'e', 'Videos', 'Please click', 'here', 'All',
