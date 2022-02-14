@@ -16,7 +16,8 @@ MISC = ['G', 'o', 'g', 'l', 'e', 'Videos', 'Please click', 'here', 'All',
         'Past week', 'Past month', 'Past year', 'All results', 'Verbatim',
         'Related searches', 'Next &gt;', '&nbsp;-&nbsp;', 'Learn more',
         'Sign in', 'Settings', 'Privacy', 'Terms', 'People also ask',
-        'See results about', '·']
+        'See results about', '·', 'More results', 'Best dictionary website',
+        'Duration:']
 
 
 def LXML_preprocessHTML(web_response):
@@ -64,9 +65,53 @@ def LXML_parseHTML(parsed, target):
             elif tag_ == 'span' and text_ in POS_TAGS:
                 current_pos = text_
             else:
-                if target.lower() not in text_.lower() and text_ not in MISC:
+                filtered = notBad(text_, current_pos, target)
+                if filtered is not None:
                     definitions.append({
                         'pos': current_pos,
-                        'definition': text_
+                        'definition': filtered
                     })
     return pronounciation, definitions
+
+
+def notBad(possible_definition, pos, word):
+    rules = []
+    results = []
+
+    ''' Question whether the definition should be considered '''
+
+    # Not a generic web blurb
+    rules.append((lambda x: x not in MISC))
+    rules.append((lambda x, y: y.lower() not in x.lower()))
+
+    for rule in rules:
+        try:
+            results.append(rule(possible_definition))
+        except TypeError:
+            if pos != 'determiner':
+                # Word should not define itself
+                results.append(rule(possible_definition, word))
+            results.append(rule(possible_definition, 'define'))
+
+    ''' Postprocessing to weed out null results '''
+    bad_phrases = [
+        r'Define ([a-z]|[A-z])+( .*)?',
+        r'How to pronounce ([a-z]|[A-z])+',
+        r'Example of ([a-z]|[A-z])+( .*)?',
+        r'(Merriam-Webster|Vocabulary\.com|Dictionary(\.com)?|'
+        r'Purdue Online Writing Lab|Merriam...|Urban|Webster\'s|'
+        r'Cambridge Advanced...|Best dictionary website)',
+        r'([a-z]|[A-Z]){3} [0-9]{2}, [0-9]{4}',
+        r'[0-9]{1,2}:[0-9]{2}',
+        r'(A Definition)? &amp; Meaning (-|\|) ',
+        r'.*&#8250;.*',
+    ]
+
+    if all(results):
+        for nonsense in bad_phrases:
+            possible_definition = re.sub(nonsense, '', possible_definition)
+        if possible_definition not in ['', ' ']:
+            print(possible_definition)
+            print("_-_-_-_")
+            return possible_definition
+    return None
