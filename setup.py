@@ -16,5 +16,9 @@ setup(
         'lxml',
         'requests'
     ],
-    packages=find_packages(include=['websearchdict', 'websearchdict.*'])
+    packages=find_packages(include=[
+        'websearchdict',
+        'websearchdict.*',
+        'websearchdict.dictionary.*',
+        'websearchdict.web.*'])
 )
