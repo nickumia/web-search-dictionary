@@ -7,7 +7,7 @@ A Definition Lookup API based on Google Search Results
 
 Currently, the project is not published on PyPI (maybe in the near future).  To install, run the following
 ```
-pip install git+https://github.com/nickumia/web-search-dictionary.git@main#egg=wsd
+pip install git+https://github.com/nickumia/web-search-dictionary.git@main#egg=websearchdict
 ```
 
 ## Example Usage
@@ -22,10 +22,10 @@ under-the-hood mechanisms that may be expanded upon in the future.
    that may provide a different understanding of web results.  Currently, lxml is the only supported parser.
 
 ```
-import wsd
+import websearchdict
 
 # Get the definitions for 'special'
-entry = wsd.lookup('special')
+entry = websearchdict.lookup('special')
 
 # Get the pronounciation for 'special'
 print(entry.getPronounciation())

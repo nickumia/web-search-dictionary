@@ -1,9 +1,9 @@
 
-import wsd
+import websearchdict
 
 
 def test_lookup():
-    definitions = wsd.lookup('equal')
+    definitions = websearchdict.lookup('equal')
     print(definitions.getDefinitions())
     assert definitions.getPronounciation() == '/&#712;&#275;kw&#601;l/'
     assert len(definitions.getDefinitions()) == 8
@@ -11,7 +11,7 @@ def test_lookup():
 
 def test_example():
     # Get the definitions for 'special'
-    entry = wsd.lookup('special')
+    entry = websearchdict.lookup('special')
 
     # Get the pronounciation for 'special'
     print(entry.getPronounciation())

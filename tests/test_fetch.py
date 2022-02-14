@@ -1,5 +1,5 @@
 
-import wsd.web.fetch as wwf
+import websearchdict.web.fetch as wwf
 
 
 def test_google_search():

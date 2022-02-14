@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='web-search-dictionary',
+    name='websearchdict',
     version='0.0.1',
     description=("A Dictionary API based on web searches "
                  "(mainly just google search haha)"),
@@ -16,5 +16,5 @@ setup(
         'lxml',
         'requests'
     ],
-    packages=find_packages(include=['wsd', 'wsd.*'])
+    packages=find_packages(include=['websearchdict', 'websearchdict.*'])
 )

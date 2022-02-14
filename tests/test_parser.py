@@ -1,7 +1,7 @@
 
 import os
 
-import wsd.web.parser as wwp
+import websearchdict.web.parser as wwp
 
 
 def test_parser():

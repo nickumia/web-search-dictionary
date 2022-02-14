@@ -1,7 +1,7 @@
 
-from wsd.dictionary.entry import Word
-from wsd.web.fetch import google_search
-from wsd.web.parser import \
+from websearchdict.dictionary.entry import Word
+from websearchdict.web.fetch import google_search
+from websearchdict.web.parser import \
     LXML_preprocessHTML, LXML_parseHTML
 
 
