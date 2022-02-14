@@ -42,3 +42,9 @@ for key, sense in entry.getDefinitions():
 # Part of speech [2]: noun
 # Definition [2]: how to pronounce s p e c i a l
 ```
+
+## Contributing + Reporting
+
+As shown in the example above, there may be unintended results from the lookup (i.e. "how to pronounce s p e c i a l").
+While I can't promise an entirely clean output.  I am striving to make this as useful and dependable as possible.  Feel free
+to make new issues and/or submit PRs for bugs or new features.  Looking forward to making this legit!
