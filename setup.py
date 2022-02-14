@@ -18,7 +18,6 @@ setup(
     ],
     packages=find_packages(include=[
         'websearchdict',
-        'websearchdict.*',
-        'websearchdict.dictionary.*',
-        'websearchdict.web.*'])
+        'websearchdict.*'
+    ])
 )
