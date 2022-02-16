@@ -12,6 +12,12 @@ pip install git+https://github.com/nickumia/web-search-dictionary.git@main#egg=w
 
 ## Example Usage
 
+There is an example script, `example.py`.  Simply supply it with a word as a command-line argument and
+it will return a list of definitions written to the terminal.
+```
+python example.py world
+```
+
 The main function of this package is `lookup()` which returns the definitions of words.  There are two
 under-the-hood mechanisms that may be expanded upon in the future.
 1. Search Engine: Currently, since Google has it's `define [word]` capability built into search bar, it
