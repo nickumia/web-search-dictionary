@@ -1,5 +1,6 @@
 
 import websearchdict
+import websearchdict.web.constants as wwc
 
 
 # Provide acceptable order of the number of definitions
@@ -10,6 +11,7 @@ def test_lookup():
     # print(definitions.getDefinitions())
     assert definitions.getPronounciation() == '/ˈēkwəl/ | '
     assert 6 <= len(definitions.getDefinitions()) <= 10
+    assert__pos(definitions.getDefinitions())
 
 
 def test_example():
@@ -35,6 +37,7 @@ def test_lookup_a():
             'examples': {'a man came out of the room'}} in definitions.values()
     # This is weird, I get 3 locally and GA gets 10 remotely :/
     assert 3 <= len(definitions) <= 10
+    assert__pos(definitions)
 
 
 def test_lookup_define():
@@ -47,6 +50,7 @@ def test_lookup_define():
             'examples': {("the contract will seek to define the client's "
                           "obligations")}} in definitions.values()
     assert 4 <= len(definitions) <= 8
+    assert__pos(definitions)
 
 
 def test_lookup_very():
@@ -61,3 +65,15 @@ def test_lookup_very():
                            'identity of a particular person or thing).'),
             'examples': {'those were his very words'}} in definitions.values()
     assert 3 <= len(definitions) <= 7
+    assert__pos(definitions)
+
+
+def test_lookup_world():
+    entry = websearchdict.lookup('very')
+    definitions = entry.getDefinitions()
+    assert__pos(definitions)
+
+
+def assert__pos(definitions):
+    for sense in definitions:
+        assert definitions[sense]['pos'] in wwc.POS_TAGS
