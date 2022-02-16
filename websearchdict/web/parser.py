@@ -5,6 +5,7 @@ import re
 
 import websearchdict.web.constants as wwc
 
+
 def LXML_preprocessHTML(web_response):
     if type(web_response.content) == str:
         hdoc = etree.fromstring(web_response.content)

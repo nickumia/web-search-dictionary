@@ -15,4 +15,3 @@ MISC = ['G', 'o', 'g', 'l', 'e', 'Videos', 'Please click', 'here', 'All',
         'Sign in', 'Settings', 'Privacy', 'Terms', 'People also ask',
         'See results about', '·', 'More results', 'Best dictionary website',
         'Duration:', 'Rating', 'View all']
-
