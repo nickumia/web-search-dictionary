@@ -14,7 +14,7 @@ if __name__ == '__main__':
     entry = websearchdict.lookup(sys.argv[1])
 
     # Get the pronounciation for the word
-    # print(entry.getPronounciation())
+    print(entry.getPronounciation())
 
     # Get the definitions
     for key, sense in entry.getDefinitions().items():
