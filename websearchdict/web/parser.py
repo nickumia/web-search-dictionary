@@ -1,4 +1,5 @@
 
+import html
 from lxml import etree
 import re
 
@@ -68,7 +69,7 @@ def LXML_parseHTML(parsed, target):
             tag_ = e.tag.strip()
             if re.match(re_pronounce, text_):
                 # Pronounciation
-                pronounciation = text_
+                pronounciation += text_ + ' | '
             elif tag_ == 'span' and text_ in POS_TAGS:
                 # POS
                 current_pos = text_
@@ -121,7 +122,7 @@ def LXML_parseHTML(parsed, target):
             fed = None
             exa = None
 
-    return pronounciation, definitions
+    return html.unescape(pronounciation), definitions
 
 
 def exampleParser(examples):
