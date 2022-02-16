@@ -34,7 +34,7 @@ def LXML_preprocessHTML(web_response):
         # Make html safe
         content = content.replace('&', '&amp;')
         content = content.replace('<=', '&lt;=')
-        # Ignore all (style|img|br|script|comment|meta|input) tags.
+        # Ignore all (style|img|br|script|comment|meta|input|hr) tags.
         content = re.sub(r'<style>.*?</style>', '', content,
                          flags=re.I | re.M | re.U)
         content = re.sub(r'<img .*?">', '', content)
@@ -45,6 +45,7 @@ def LXML_preprocessHTML(web_response):
         content = re.sub(r'<script.*?</script>', '', content)
         content = re.sub(r'<!--.*?-->', '', content)
         content = re.sub(r'<meta .*?">', '', content)
+        content = re.sub(r'<hr( +)?>', '', content)
 
         # TODO: Fix timing of this replacement
         content = re.sub(r'[0-9]+ days ago', '', content)
