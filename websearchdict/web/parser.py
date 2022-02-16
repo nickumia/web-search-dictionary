@@ -40,10 +40,8 @@ def LXML_preprocessHTML(web_response):
 
 def LXML_parseHTML(parsed, target):
     pronounciation = ""
-    re_pronounce = r'/(&#|[a-z}|[A-Z]|[0-9]|;|,)+/'
     current_pos = None
     examples = ""
-    still_example = False
     queue = []
 
     for e in parsed.iter():
@@ -51,7 +49,7 @@ def LXML_parseHTML(parsed, target):
             # print(e.text)
             text_ = e.text.strip().replace('\xa0', '').strip()
             tag_ = e.tag.strip()
-            if re.match(re_pronounce, text_):
+            if re.match(wwc.PRONUNCIATION, text_):
                 # Pronounciation
                 pronounciation += text_ + ' | '
             elif tag_ == 'span' and text_ in wwc.POS_TAGS:
@@ -61,15 +59,14 @@ def LXML_parseHTML(parsed, target):
                 # Example
                 examples += text_ + ' '
                 if text_[-1] != '"':
-                    still_example = True
                     continue
                 if text_[-1] == '"':
-                    still_example = False
                     examples = exampleParser(examples)
                     queue.append(examples)
                     examples = ""
             else:
-                if still_example:
+                # Still an example
+                if examples != "":
                     examples += text_ + ' '
                     continue
                 # Definition
@@ -77,7 +74,6 @@ def LXML_parseHTML(parsed, target):
                 if filtered is not None:
                     queue.append(current_pos)
                     queue.append(filtered)
-
 
     return html.unescape(pronounciation), queueToDict(queue)
 
