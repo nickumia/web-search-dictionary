@@ -7,7 +7,7 @@ import websearchdict
 
 def test_lookup():
     definitions = websearchdict.lookup('equal')
-    print(definitions.getDefinitions())
+    # print(definitions.getDefinitions())
     assert definitions.getPronounciation() == '/&#712;&#275;kw&#601;l/'
     assert 6 <= len(definitions.getDefinitions()) <= 10
 
@@ -48,7 +48,7 @@ def test_lookup_define():
 def test_lookup_very():
     entry = websearchdict.lookup('very')
     definitions = entry.getDefinitions()
-    print(definitions)
+    # print(definitions)
     assert {'pos': 'adverb',
             'definition': 'in a high degree.'} in definitions.values()
     assert {'pos': 'adjective',
