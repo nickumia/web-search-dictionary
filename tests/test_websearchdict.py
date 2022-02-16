@@ -33,7 +33,7 @@ def test_lookup_a():
             'definition': ('used when referring to someone or something for '
                            'the first time in a text or conversation.'),
             'examples': {'a man came out of the room'}} in definitions.values()
-    assert 3 <= len(definitions) <= 5
+    assert 4 <= len(definitions) <= 10
 
 
 def test_lookup_define():
