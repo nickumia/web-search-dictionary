@@ -12,6 +12,12 @@ pip install git+https://github.com/nickumia/web-search-dictionary.git@main#egg=w
 
 ## Example Usage
 
+There is an example script, `example.py`.  Simply supply it with a word as a command-line argument and
+it will return a list of definitions written to the terminal.
+```
+python example.py special
+```
+
 The main function of this package is `lookup()` which returns the definitions of words.  There are two
 under-the-hood mechanisms that may be expanded upon in the future.
 1. Search Engine: Currently, since Google has it's `define [word]` capability built into search bar, it
@@ -22,27 +28,14 @@ under-the-hood mechanisms that may be expanded upon in the future.
    that may provide a different understanding of web results.  Currently, lxml is the only supported parser.
 
 ```
-import websearchdict
+# Example Output:
 
-# Get the definitions for 'special'
-entry = websearchdict.lookup('special')
-
-# Get the pronounciation for 'special'
-print(entry.getPronounciation())
-
-# Get the definitions
-for key, sense in entry.getDefinitions():
-  print('Part of speech [%d]: %s' % (key, sense['pos']))
-  print('Definition [%d]: %s' % (key, sense['definition']))
-
-# Output:
-# /&#712;speSH&#601;l/
-# Part of speech [0]: adjective
-# Definition [0]: better, greater, or otherwise different from what is usual.
-# Part of speech [1]: noun
-# Definition [1]: a thing, such as an event, product, or broadcast, that is designed or organized for a particular occasion or purpose.
-# Part of speech [2]: noun
-# Definition [2]: how to pronounce s p e c i a l
+Part of speech [0]: adjective
+Definition [0]: better, greater, or otherwise different from what is usual.
+Example [0]: they always made a special effort at Christmas
+Part of speech [1]: noun
+Definition [1]: a thing, such as an event, product, or broadcast, that is designed or organized for a particular occasion or purpose.
+Example [1]: television's election night specials
 ```
 
 ## Special Considerations

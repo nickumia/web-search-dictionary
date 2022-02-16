@@ -17,12 +17,18 @@ jobs:
         run: make lint
 
   test:
+    strategy:
+      matrix:
+        py-version: ['3.6', '3.7', '3.8', '3.9', '3.10']
     name: Pytest
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: build
-        run: make build
-      - name: test
-        run: make test
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.py-version }}
+      - name: Install requirements
+        run: pip install -r requirements.txt -r dev-requirements.txt
+      - name: Run pytest
+        run: coverage run --source=websearchdict -m pytest --disable-pytest-warnings && coverage report --omit=\"tests/*\"

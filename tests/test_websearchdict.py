@@ -7,8 +7,8 @@ import websearchdict
 
 def test_lookup():
     definitions = websearchdict.lookup('equal')
-    print(definitions.getDefinitions())
-    assert definitions.getPronounciation() == '/&#712;&#275;kw&#601;l/'
+    # print(definitions.getDefinitions())
+    assert definitions.getPronounciation() == '/ˈēkwəl/ | '
     assert 6 <= len(definitions.getDefinitions()) <= 10
 
 
@@ -28,21 +28,25 @@ def test_example():
 def test_lookup_a():
     entry = websearchdict.lookup('a')
     definitions = entry.getDefinitions()
+    print(definitions)
     assert {'pos': 'determiner',
-            'definition': ('1 : on : in : at abed · 2 : in (such) a state or '
-                           'condition afire · 3 : in (such) a manner aloud · '
-                           '4 : in the act or process of gone a-hunting ating'
-                           'le.')} in definitions.values()
-    assert 13 <= len(definitions) <= 17
+            'definition': ('used when referring to someone or something for '
+                           'the first time in a text or conversation.'),
+            'examples': {'a man came out of the room'}} in definitions.values()
+    # This is weird, I get 3 locally and GA gets 10 remotely :/
+    assert 3 <= len(definitions) <= 10
 
 
 def test_lookup_define():
     entry = websearchdict.lookup('define')
     definitions = entry.getDefinitions()
+    print(definitions)
     assert {'pos': 'verb',
             'definition': ('state or describe exactly the nature, scope, or '
-                           'meaning of.')} in definitions.values()
-    assert 11 <= len(definitions) <= 15
+                           'meaning of.'),
+            'examples': {("the contract will seek to define the client's "
+                          "obligations")}} in definitions.values()
+    assert 4 <= len(definitions) <= 8
 
 
 def test_lookup_very():
@@ -50,9 +54,10 @@ def test_lookup_very():
     definitions = entry.getDefinitions()
     print(definitions)
     assert {'pos': 'adverb',
-            'definition': 'in a high degree.'} in definitions.values()
+            'definition': 'in a high degree.',
+            'examples': {'very much so'}} in definitions.values()
     assert {'pos': 'adjective',
             'definition': ('actual; precise (used to emphasize the exact '
-                           'identity of a particular person or thing).')} \
-        in definitions.values()
-    assert 8 <= len(definitions) <= 12
+                           'identity of a particular person or thing).'),
+            'examples': {'those were his very words'}} in definitions.values()
+    assert 3 <= len(definitions) <= 7
