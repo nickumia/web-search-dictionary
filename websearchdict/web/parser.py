@@ -41,7 +41,6 @@ def LXML_preprocessHTML(web_response):
 def LXML_parseHTML(parsed, target):
     pronounciation = ""
     re_pronounce = r'/(&#|[a-z}|[A-Z]|[0-9]|;|,)+/'
-    definitions = []
     current_pos = None
     examples = ""
     still_example = False
@@ -79,6 +78,25 @@ def LXML_parseHTML(parsed, target):
                     queue.append(current_pos)
                     queue.append(filtered)
 
+
+    return html.unescape(pronounciation), queueToDict(queue)
+
+
+def exampleParser(examples):
+    try:
+        examples = set(examples.split('"'))
+        try:
+            examples.remove('')
+            examples.remove(' ')
+        except KeyError:
+            pass
+    except TypeError:
+        examples = ["None."]
+    return examples
+
+
+def queueToDict(queue):
+    definitions = []
     pos = None
     fed = None
     exa = None
@@ -106,21 +124,7 @@ def LXML_parseHTML(parsed, target):
                 pos = current_thing
             fed = None
             exa = None
-
-    return html.unescape(pronounciation), definitions
-
-
-def exampleParser(examples):
-    try:
-        examples = set(examples.split('"'))
-        try:
-            examples.remove('')
-            examples.remove(' ')
-        except KeyError:
-            pass
-    except TypeError:
-        examples = ["None."]
-    return examples
+    return definitions
 
 
 def notBad(possible_definition, pos, word):
