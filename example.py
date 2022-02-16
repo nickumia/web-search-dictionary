@@ -14,9 +14,14 @@ if __name__ == '__main__':
     entry = websearchdict.lookup(sys.argv[1])
 
     # Get the pronounciation for the word
-    print(entry.getPronounciation())
+    # print(entry.getPronounciation())
 
     # Get the definitions
     for key, sense in entry.getDefinitions().items():
         print('Part of speech [%d]: %s' % (key, sense['pos']))
         print('Definition [%d]: %s' % (key, sense['definition']))
+        try:
+            for example in sense['examples']:
+                print('Example [%d]: %s' % (key, example))
+        except TypeError:
+            print('Example [%d]: %s' % (key, sense['examples']))
