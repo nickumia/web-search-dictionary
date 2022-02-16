@@ -54,25 +54,87 @@ def LXML_preprocessHTML(web_response):
 
 def LXML_parseHTML(parsed, target):
     pronounciation = ""
+    re_pronounce = r'/(&#|[a-z}|[A-Z]|[0-9]|;|,)+/'
     definitions = []
     current_pos = None
+    examples = ""
+    still_example = False
+    queue = []
 
     for e in parsed.iter():
         if e.text is not None:
-            text_ = e.text.strip().replace('\xa0', '')
+            # print(e.text)
+            text_ = e.text.strip().replace('\xa0', '').strip()
             tag_ = e.tag.strip()
-            if '/&#' in text_:
+            if re.match(re_pronounce, text_):
+                # Pronounciation
                 pronounciation = text_
             elif tag_ == 'span' and text_ in POS_TAGS:
+                # POS
                 current_pos = text_
+            elif '"' in text_:
+                # Example
+                examples += text_ + ' '
+                if text_[-1] != '"':
+                    still_example = True
+                    continue
+                if text_[-1] == '"':
+                    still_example = False
+                    examples = exampleParser(examples)
+                    queue.append(examples)
+                    examples = ""
             else:
+                if still_example:
+                    examples += text_ + ' '
+                    continue
+                # Definition
                 filtered = notBad(text_, current_pos, target)
                 if filtered is not None:
-                    definitions.append({
-                        'pos': current_pos,
-                        'definition': filtered
-                    })
+                    queue.append(current_pos)
+                    queue.append(filtered)
+
+    pos = None
+    fed = None
+    exa = None
+    while len(queue) > 0:
+        current_thing = queue.pop(0)
+        if pos is None:
+            pos = current_thing
+        elif fed is None:
+            fed = current_thing
+        elif exa is None:
+            if type(current_thing) == set:
+                exa = current_thing
+                definitions.append({
+                    'pos': pos,
+                    'definition': fed,
+                    'examples': exa
+                })
+                pos = None
+            else:
+                definitions.append({
+                    'pos': pos,
+                    'definition': fed,
+                    'examples': exa
+                })
+                pos = current_thing
+            fed = None
+            exa = None
+
     return pronounciation, definitions
+
+
+def exampleParser(examples):
+    try:
+        examples = set(examples.split('"'))
+        try:
+            examples.remove('')
+            examples.remove(' ')
+        except KeyError:
+            pass
+    except TypeError:
+        examples = ["None."]
+    return examples
 
 
 def notBad(possible_definition, pos, word):
@@ -104,13 +166,15 @@ def notBad(possible_definition, pos, word):
         r'(Merriam-Webster|Vocabulary\.com|(Best English )?Dictionary(\.com)?|'
         r'Purdue Online Writing Lab|Merriam...|Urban|Webster\'s|'
         r'Cambridge Advanced...|Best dictionary website|In stock|'
-        r'Wikipedia|Noun:|Collins English Di...|Past participle:)',
+        r'Wikipedia|Noun:?|Collins English Di...|Past participle:|'
+        r'Adverb and Its Kinds|Adjective:?|Verb:?)',
         r'([a-z]|[A-Z]){3} [0-9]{1,2}, [0-9]{4}',
         r'[0-9]{1,2}:[0-9]{2}',
         r'(A Definition)? &amp; Meaning (-|\|) ',
         r'(\$?[0-9]+\.[0-9]{1,2}|\([0-9]+\)|^[0-9]$)',
         r'.*&#; Best Sellers &#;.*',
         r'.*&#8250;.*',
+        r'.*?\?',
     ]
 
     if all(results):
