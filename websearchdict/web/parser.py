@@ -3,24 +3,7 @@ import html
 from lxml import etree
 import re
 
-
-POS_TAGS = [
-    'noun',
-    'adjective',
-    'verb',
-    'adverb',
-    'determiner'
-]
-
-MISC = ['G', 'o', 'g', 'l', 'e', 'Videos', 'Please click', 'here', 'All',
-        'News', 'Images', 'Videos', 'Maps', 'Shopping', 'Books', '×',
-        'Search tools', 'Any time', 'Past hour', 'Past 24 hours', '',
-        'Past week', 'Past month', 'Past year', 'All results', 'Verbatim',
-        'Related searches', 'Next &gt;', '&nbsp;-&nbsp;', 'Learn more',
-        'Sign in', 'Settings', 'Privacy', 'Terms', 'People also ask',
-        'See results about', '·', 'More results', 'Best dictionary website',
-        'Duration:', 'Rating', 'View all']
-
+import websearchdict.web.constants as wwc
 
 def LXML_preprocessHTML(web_response):
     if type(web_response.content) == str:
@@ -71,7 +54,7 @@ def LXML_parseHTML(parsed, target):
             if re.match(re_pronounce, text_):
                 # Pronounciation
                 pronounciation += text_ + ' | '
-            elif tag_ == 'span' and text_ in POS_TAGS:
+            elif tag_ == 'span' and text_ in wwc.POS_TAGS:
                 # POS
                 current_pos = text_
             elif '"' in text_:
@@ -146,7 +129,7 @@ def notBad(possible_definition, pos, word):
     ''' Question whether the definition should be considered '''
 
     # Not a generic web blurb
-    rules.append((lambda x: x not in MISC))
+    rules.append((lambda x: x not in wwc.MISC))
     rules.append((lambda x, y: y.lower() not in x.lower()))
 
     for rule in rules:
