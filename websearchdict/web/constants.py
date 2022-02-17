@@ -33,7 +33,7 @@ MISC = ['G', 'o', 'g', 'l', 'e', 'Videos', 'Please click', 'here', 'All',
 BAD_PHRASES = [
     # Google suggestions
     r'Define ([a-z]|[A-z])+( .*)?',
-    r'([a-z]|[A-z])+ definition',
+    r'([a-z]|[A-z])+ (d|D)efinition',
     r'Definition of ([a-z]|[A-z])+(.*)?',
     r'How to pronounce ([a-z]|[A-z])+',
     r'Example (of )?([a-z]|[A-z])+( .*)?',
