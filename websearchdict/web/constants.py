@@ -5,7 +5,9 @@ POS_TAGS = [
     'verb',
     'adverb',
     'determiner',
-    'conjunction'
+    'conjunction',
+    'number',
+    'pronoun'
 ]
 
 BAD_TAGS = [
