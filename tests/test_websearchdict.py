@@ -54,7 +54,7 @@ def test_lookup_define():
                          'elucidate', 'explicate', 'describe', 'clarify',
                          'give the meaning of', 'state precisely',
                          'spell out', 'put into words', 'express in words']
-           } in definitions.values()
+            } in definitions.values()
     assert 4 <= len(definitions) <= 8
     assert__pos(definitions)
 
@@ -84,7 +84,7 @@ def test_lookup_very():
                          'dead', 'dirty', 'jolly', 'fair', 'real', 'mighty',
                          'powerful', 'awful', 'plumb', 'darned', 'way',
                          'bitching', 'mad', 'lekker', 'exceeding', 'sore']
-           } in definitions.values()
+            } in definitions.values()
     assert {'pos': 'adjective',
             'definition': ('actual; precise (used to emphasize the exact '
                            'identity of a particular person or thing).'),
@@ -94,7 +94,7 @@ def test_lookup_very():
                          'appropriate', 'suitable', 'apt', 'fitting', 'fit',
                          'right', 'just right', 'made to order',
                          'tailor-made', 'spot on', 'just the job']
-           } in definitions.values()
+            } in definitions.values()
     assert 3 <= len(definitions) <= 7
     assert__pos(definitions)
 

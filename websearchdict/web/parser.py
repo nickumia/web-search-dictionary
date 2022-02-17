@@ -166,12 +166,13 @@ def notBad(possible_definition, pos, word):
         r'([a-z]|[A-z])+ definition',
         r'Definition of ([a-z]|[A-z])+(.*)?',
         r'How to pronounce ([a-z]|[A-z])+',
-        r'Example of ([a-z]|[A-z])+( .*)?',
+        r'Example (of )?([a-z]|[A-z])+( .*)?',
         r'(Merriam-Webster|Vocabulary\.com|(Best English )?Dictionary(\.com)?|'
         r'Purdue Online Writing Lab|Merriam...|Urban|Webster\'s|'
         r'Cambridge Advanced...|Best dictionary website|In stock|'
         r'Wikipedia|Noun:?|Collins English Di...|Past participle:|'
-        r'Adverb and Its Kinds|Adjective:?|Verb:?|Oxford English Di...)',
+        r'Adverb and Its Kinds|Adjective:?|Verb:?|Oxford English Di...)|'
+        r' ?sites for students)',
         r'([a-z]|[A-Z]){3} [0-9]{1,2}, [0-9]{4}',
         r'[0-9]{1,2}:[0-9]{2}',
         r'(A Definition)? &amp; Meaning (-|\|) ',
