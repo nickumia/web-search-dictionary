@@ -171,7 +171,7 @@ def notBad(possible_definition, pos, word):
         r'Purdue Online Writing Lab|Merriam...|Urban|Webster\'s|'
         r'Cambridge Advanced...|Best dictionary website|In stock|'
         r'Wikipedia|Noun:?|Collins English Di...|Past participle:|'
-        r'Adverb and Its Kinds|Adjective:?|Verb:?|Oxford English Di...)|'
+        r'Adverb and Its Kinds|Adjective:?|Verb:?|Oxford English Di...|'
         r' ?sites for students)',
         r'([a-z]|[A-Z]){3} [0-9]{1,2}, [0-9]{4}',
         r'[0-9]{1,2}:[0-9]{2}',
