@@ -41,11 +41,14 @@ BAD_PHRASES = [
     r',| |(s|S)ynonyms?|(e|E)xamples?)+ \| .*',
     r'(A Definition)? &amp; Meaning (-|\|) ',
     r'Meaning of ([a-z]|[A-z])+( .*)?',
+    r'.*? - Investopedia',
+    r'.*(t|T)hesaurus.*',
     # Dates/Times/Money/Ratings
     r'([a-z]|[A-Z]){3} [0-9]{1,2}, [0-9]{4}',
     r'[0-9]{1,2}:[0-9]{2}',
     r'(\$?[0-9]+\.[0-9]{1,2}|\([0-9]+\)|^[0-9]$)',
     r'[0-9]+ days ago',
+    r'(Results )?[0-9]+ - [0-9]+ of [0-9]+',
     # Misc
     r'.*&#; Best Sellers &#;.*',
     r'.*&#8250;.*',
@@ -54,7 +57,8 @@ BAD_PHRASES = [
     r'Purdue Online Writing Lab|Merriam...|Urban|Webster\'s|Cambridge Advanced'
     r'...|Best dictionary website|In stock|Wikipedia|Noun:?|Collins English '
     r'Di...|Past participle:|Adverb and Its Kinds|Adjective:?|Verb:?|Oxford '
-    r'English Di...| ?sites for students)'
+    r'English Di...| ?sites for students|He/she/it:|People also search for:|'
+    r'Superlative:|Adv:)'
 ]
 
 PRONUNCIATION = r'/(&#|[a-z}|[A-Z]|[0-9]|;|,|[^a-zA-Z\d\s])+/'
