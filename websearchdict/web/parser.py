@@ -18,21 +18,13 @@ def LXML_preprocessHTML(web_response):
         # Make html safe
         content = content.replace('&', '&amp;')
         content = content.replace('<=', '&lt;=')
-        # Ignore all (style|img|br|script|comment|meta|input|hr) tags.
-        content = re.sub(r'<style>.*?</style>', '', content,
-                         flags=re.I | re.M | re.U)
-        content = re.sub(r'<img .*?">', '', content)
-        content = re.sub(r'<input .*?">', '', content)
-        content = re.sub(r'<br>', '', content)
+        # '<' '>' signs in JS code sucks..
         content = re.sub(r'<([a-z]|[A-Z])(\[[0-9]+\])?\.length',
                          '&lt;a.length', content)
-        content = re.sub(r'<script.*?</script>', '', content)
-        content = re.sub(r'<!--.*?-->', '', content)
-        content = re.sub(r'<meta .*?">', '', content)
-        content = re.sub(r'<hr( +)?>', '', content)
+        # Ignore all (style|img|br|script|comment|meta|input|hr) tags.
+        for unsafe_tag in wwc.BAD_TAGS:
+            content = re.sub(unsafe_tag, '', content)
 
-        # TODO: Fix timing of this replacement
-        content = re.sub(r'[0-9]+ days ago', '', content)
         # print(content)
         hdoc = etree.fromstring(content)
     return hdoc
@@ -40,11 +32,8 @@ def LXML_preprocessHTML(web_response):
 
 def LXML_parseHTML(parsed, target):
     pronounciation = ""
-    re_pronounce = r'/(&#|[a-z}|[A-Z]|[0-9]|;|,)+/'
-    definitions = []
     current_pos = None
     examples = ""
-    still_example = False
     queue = []
 
     for e in parsed.iter():
@@ -52,7 +41,7 @@ def LXML_parseHTML(parsed, target):
             # print(e.text)
             text_ = e.text.strip().replace('\xa0', '').strip()
             tag_ = e.tag.strip()
-            if re.match(re_pronounce, text_):
+            if re.match(wwc.PRONUNCIATION, text_):
                 # Pronounciation
                 pronounciation += text_ + ' | '
             elif tag_ == 'span' and text_ in wwc.POS_TAGS:
@@ -62,65 +51,98 @@ def LXML_parseHTML(parsed, target):
                 # Example
                 examples += text_ + ' '
                 if text_[-1] != '"':
-                    still_example = True
                     continue
                 if text_[-1] == '"':
-                    still_example = False
                     examples = exampleParser(examples)
                     queue.append(examples)
                     examples = ""
             else:
-                if still_example:
+                # Still an example
+                if examples != "":
                     examples += text_ + ' '
                     continue
                 # Definition
                 filtered = notBad(text_, current_pos, target)
+                # Check for synonym
                 if filtered is not None:
-                    queue.append(current_pos)
-                    queue.append(filtered)
+                    if filtered[0:10] == 'synonyms: ':
+                        syns = filtered.replace('synonym: ', '')
+                        syns = syns.split(', ')
+                        queue.append(syns)
+                    else:
+                        queue.append(current_pos)
+                        queue.append(filtered)
 
-    pos = None
-    fed = None
-    exa = None
-    while len(queue) > 0:
-        current_thing = queue.pop(0)
-        if pos is None:
-            pos = current_thing
-        elif fed is None:
-            fed = current_thing
-        elif exa is None:
-            if type(current_thing) == set:
-                exa = current_thing
-                definitions.append({
-                    'pos': pos,
-                    'definition': fed,
-                    'examples': exa
-                })
-                pos = None
-            else:
-                definitions.append({
-                    'pos': pos,
-                    'definition': fed,
-                    'examples': exa
-                })
-                pos = current_thing
-            fed = None
-            exa = None
-
-    return html.unescape(pronounciation), definitions
+    return html.unescape(pronounciation), queueToDict(queue)
 
 
 def exampleParser(examples):
+    examples = set(examples.split('"'))
     try:
-        examples = set(examples.split('"'))
-        try:
-            examples.remove('')
-            examples.remove(' ')
-        except KeyError:
-            pass
-    except TypeError:
-        examples = ["None."]
+        examples.remove('')
+        examples.remove(' ')
+    except KeyError:
+        pass
     return examples
+
+
+def queueToDict(queue):
+    '''
+    Definitions always start with a POS Tag.  This function iterates
+    through the parsed content and combines elements that are related.
+    Possible combinations:
+        - pos, definition
+        - pos, definition, example
+        - pos, definition, example, synonyms
+    Example Impossible combinations:
+        - pos, definition, synonyms
+        - pos, example
+        - pos, synonyms
+    '''
+    definitions = []
+    transfer = None
+
+    while len(queue) > 0:
+        # Always start with POS
+        if transfer is not None:
+            items = [transfer]
+        else:
+            items = [queue.pop(0)]
+
+        # Iterate until the next POS is hit
+        current_thing = None
+        while current_thing not in wwc.POS_TAGS:
+            try:
+                current_thing = queue.pop(0)
+                if current_thing not in wwc.POS_TAGS:
+                    items.append(current_thing)
+            except IndexError:
+                break
+        # Save POS for next time
+        transfer = current_thing
+
+        if len(items) == 2:
+            definitions.append({
+                'pos': items[0],
+                'definition': items[1],
+                'examples': None,
+                'synonyms': None
+            })
+        elif len(items) == 3:
+            definitions.append({
+                'pos': items[0],
+                'definition': items[1],
+                'examples': items[2],
+                'synonyms': None
+            })
+        elif len(items) == 4:
+            definitions.append({
+                'pos': items[0],
+                'definition': items[1],
+                'examples': items[2],
+                'synonyms': items[3]
+            })
+    return definitions
 
 
 def notBad(possible_definition, pos, word):
@@ -143,28 +165,9 @@ def notBad(possible_definition, pos, word):
             results.append(rule(possible_definition, 'define'))
 
     ''' Postprocessing to weed out null results '''
-    bad_phrases = [
-        r'Define ([a-z]|[A-z])+( .*)?',
-        r'([a-z]|[A-z])+ definition',
-        r'Definition of ([a-z]|[A-z])+(.*)?',
-        r'How to pronounce ([a-z]|[A-z])+',
-        r'Example of ([a-z]|[A-z])+( .*)?',
-        r'(Merriam-Webster|Vocabulary\.com|(Best English )?Dictionary(\.com)?|'
-        r'Purdue Online Writing Lab|Merriam...|Urban|Webster\'s|'
-        r'Cambridge Advanced...|Best dictionary website|In stock|'
-        r'Wikipedia|Noun:?|Collins English Di...|Past participle:|'
-        r'Adverb and Its Kinds|Adjective:?|Verb:?|Oxford English Di...)',
-        r'([a-z]|[A-Z]){3} [0-9]{1,2}, [0-9]{4}',
-        r'[0-9]{1,2}:[0-9]{2}',
-        r'(A Definition)? &amp; Meaning (-|\|) ',
-        r'(\$?[0-9]+\.[0-9]{1,2}|\([0-9]+\)|^[0-9]$)',
-        r'.*&#; Best Sellers &#;.*',
-        r'.*&#8250;.*',
-        r'.*?\?',
-    ]
 
     if all(results):
-        for nonsense in bad_phrases:
+        for nonsense in wwc.BAD_PHRASES:
             possible_definition = re.sub(nonsense, '', possible_definition)
         if possible_definition not in ['', ' ']:
             # print(possible_definition)

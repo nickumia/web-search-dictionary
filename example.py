@@ -25,3 +25,4 @@ if __name__ == '__main__':
                 print('Example [%d]: %s' % (key, example))
         except TypeError:
             print('Example [%d]: %s' % (key, sense['examples']))
+        print('Synonyms [%d]: %s' % (key, sense['synonyms']))
