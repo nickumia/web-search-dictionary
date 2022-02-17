@@ -100,9 +100,19 @@ def test_lookup_very():
 
 
 def test_lookup_world():
-    entry = websearchdict.lookup('very')
+    entry = websearchdict.lookup('world')
     definitions = entry.getDefinitions()
     assert__pos(definitions)
+
+
+def test_lookup_or():
+    entry = websearchdict.lookup('or')
+    definitions = entry.getDefinitions()
+    assert__pos(definitions)
+    assert {'pos': 'conjunction',
+            'definition': 'either.',
+            'examples': {'to love is the one way to know or God or man'},
+            'synonyms': None} in definitions.values()
 
 
 def assert__pos(definitions):

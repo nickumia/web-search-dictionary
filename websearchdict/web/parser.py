@@ -64,7 +64,7 @@ def LXML_parseHTML(parsed, target):
                 # Definition
                 filtered = notBad(text_, current_pos, target)
                 # Check for synonym
-                if filtered is not None:
+                if filtered is not None and current_pos is not None:
                     if filtered[0:10] == 'synonyms: ':
                         syns = filtered.replace('synonyms: ', '')
                         syns = syns.split(', ')

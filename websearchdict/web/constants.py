@@ -4,7 +4,8 @@ POS_TAGS = [
     'adjective',
     'verb',
     'adverb',
-    'determiner'
+    'determiner',
+    'conjunction'
 ]
 
 BAD_TAGS = [
@@ -51,4 +52,4 @@ BAD_PHRASES = [
     r'English Di...| ?sites for students)'
 ]
 
-PRONUNCIATION = r'/(&#|[a-z}|[A-Z]|[0-9]|;|,)+/'
+PRONUNCIATION = r'/(&#|[a-z}|[A-Z]|[0-9]|;|,|[^a-zA-Z\d\s])+/'
