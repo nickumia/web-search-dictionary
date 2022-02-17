@@ -66,7 +66,7 @@ def LXML_parseHTML(parsed, target):
                 # Check for synonym
                 if filtered is not None:
                     if filtered[0:10] == 'synonyms: ':
-                        syns = filtered.replace('synonym: ', '')
+                        syns = filtered.replace('synonyms: ', '')
                         syns = syns.split(', ')
                         queue.append(syns)
                     else:

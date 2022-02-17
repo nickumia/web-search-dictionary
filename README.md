@@ -43,7 +43,7 @@ Example [1]: television's election night specials
 Part of speech [0]: noun
 Definition [0]: the earth, together with all of its countries, peoples, and natural features.
 Example [0]: he was doing his bit to save the world
-Synonyms [0]: ['synonyms: earth', 'globe', 'planet', 'sphere']
+Synonyms [0]: ['earth', 'globe', 'planet', 'sphere']
 Part of speech [1]: noun
 Definition [1]: a region or group of countries.
 Example [1]: the English-speaking world
@@ -51,7 +51,7 @@ Synonyms [1]: None
 Part of speech [2]: noun
 Definition [2]: human and social interaction.
 Example [2]: he has almost completely withdrawn from the world
-Synonyms [2]: ['synonyms: society', 'high society', 'secular interests', 'temporal concerns', 'earthly concerns', 'human existence']
+Synonyms [2]: ['society', 'high society', 'secular interests', 'temporal concerns', 'earthly concerns', 'human existence']
 ```
 
 ## Special Considerations
