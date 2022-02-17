@@ -161,29 +161,9 @@ def notBad(possible_definition, pos, word):
             results.append(rule(possible_definition, 'define'))
 
     ''' Postprocessing to weed out null results '''
-    bad_phrases = [
-        r'Define ([a-z]|[A-z])+( .*)?',
-        r'([a-z]|[A-z])+ definition',
-        r'Definition of ([a-z]|[A-z])+(.*)?',
-        r'How to pronounce ([a-z]|[A-z])+',
-        r'Example (of )?([a-z]|[A-z])+( .*)?',
-        r'(Merriam-Webster|Vocabulary\.com|(Best English )?Dictionary(\.com)?|'
-        r'Purdue Online Writing Lab|Merriam...|Urban|Webster\'s|'
-        r'Cambridge Advanced...|Best dictionary website|In stock|'
-        r'Wikipedia|Noun:?|Collins English Di...|Past participle:|'
-        r'Adverb and Its Kinds|Adjective:?|Verb:?|Oxford English Di...|'
-        r' ?sites for students)',
-        r'([a-z]|[A-Z]){3} [0-9]{1,2}, [0-9]{4}',
-        r'[0-9]{1,2}:[0-9]{2}',
-        r'(A Definition)? &amp; Meaning (-|\|) ',
-        r'(\$?[0-9]+\.[0-9]{1,2}|\([0-9]+\)|^[0-9]$)',
-        r'.*&#; Best Sellers &#;.*',
-        r'.*&#8250;.*',
-        r'.*?\?',
-    ]
 
     if all(results):
-        for nonsense in bad_phrases:
+        for nonsense in wwc.BAD_PHRASES:
             possible_definition = re.sub(nonsense, '', possible_definition)
         if possible_definition not in ['', ' ']:
             # print(possible_definition)
