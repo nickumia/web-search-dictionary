@@ -31,13 +31,16 @@ MISC = ['G', 'o', 'g', 'l', 'e', 'Videos', 'Please click', 'here', 'All',
         'Best dictionary website', 'Duration:']
 
 BAD_PHRASES = [
-    # Google suggestions
+    # Google suggestions / Dictionary Result Titles
     r'Define ([a-z]|[A-z])+( .*)?',
     r'([a-z]|[A-z])+ (d|D)efinition',
     r'Definition of ([a-z]|[A-z])+(.*)?',
     r'How to pronounce ([a-z]|[A-z])+',
     r'Example (of )?([a-z]|[A-z])+( .*)?',
+    r'([a-zA-Z]+ \([a-zA-Z]+\))?((d|D)efinition |(and|&) |(m|M)eaning|'
+    r',| |(s|S)ynonyms?)+ \| .*',
     r'(A Definition)? &amp; Meaning (-|\|) ',
+    r'Meaning of ([a-z]|[A-z])+( .*)?',
     # Dates/Times/Money/Ratings
     r'([a-z]|[A-Z]){3} [0-9]{1,2}, [0-9]{4}',
     r'[0-9]{1,2}:[0-9]{2}',

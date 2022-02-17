@@ -162,6 +162,9 @@ def notBad(possible_definition, pos, word):
             if pos != 'determiner':
                 # Word should not define itself
                 results.append(rule(possible_definition, word))
+                # TODO: Ignore lemmas
+                if word[-1] == 's':
+                    results.append(rule(possible_definition, word[0:-1]))
             results.append(rule(possible_definition, 'define'))
 
     ''' Postprocessing to weed out null results '''

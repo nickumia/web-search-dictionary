@@ -115,6 +115,19 @@ def test_lookup_or():
             'synonyms': None} in definitions.values()
 
 
+def test_lookup_affair_affairs():
+    entry = websearchdict.lookup('affair')
+    definitions = entry.getDefinitions()
+    entry2 = websearchdict.lookup('affairs')
+    definitions2 = entry2.getDefinitions()
+
+    assert__pos(definitions)
+    assert__pos(definitions2)
+
+    assert 3 <= len(definitions) <= 8
+    assert 3 <= len(definitions2) <= 8
+
+
 def assert__pos(definitions):
     for sense in definitions:
         assert definitions[sense]['pos'] in wwc.POS_TAGS
