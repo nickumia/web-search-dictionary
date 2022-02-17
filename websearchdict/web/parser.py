@@ -71,9 +71,15 @@ def LXML_parseHTML(parsed, target):
                     continue
                 # Definition
                 filtered = notBad(text_, current_pos, target)
+                # Check for synonym
                 if filtered is not None:
-                    queue.append(current_pos)
-                    queue.append(filtered)
+                    if filtered[0:10] == 'synonyms: ':
+                        syns = filtered.replace('synonym: ', '')
+                        syns = syns.split(', ')
+                        queue.append(syns)
+                    else:
+                        queue.append(current_pos)
+                        queue.append(filtered)
 
     return html.unescape(pronounciation), queueToDict(queue)
 
@@ -93,33 +99,45 @@ def exampleParser(examples):
 
 def queueToDict(queue):
     definitions = []
-    pos = None
-    fed = None
-    exa = None
+    transfer = None
+
     while len(queue) > 0:
-        current_thing = queue.pop(0)
-        if pos is None:
-            pos = current_thing
-        elif fed is None:
-            fed = current_thing
-        elif exa is None:
-            if type(current_thing) == set:
-                exa = current_thing
-                definitions.append({
-                    'pos': pos,
-                    'definition': fed,
-                    'examples': exa
-                })
-                pos = None
-            else:
-                definitions.append({
-                    'pos': pos,
-                    'definition': fed,
-                    'examples': exa
-                })
-                pos = current_thing
-            fed = None
-            exa = None
+        if transfer is not None:
+            items = [transfer]
+        else:
+            items = [queue.pop(0)]
+
+        current_thing = None
+        while current_thing not in wwc.POS_TAGS:
+            try:
+                current_thing = queue.pop(0)
+                if current_thing not in wwc.POS_TAGS:
+                    items.append(current_thing)
+            except IndexError:
+                break
+        transfer = current_thing
+
+        if len(items) == 2:
+            definitions.append({
+                'pos': items[0],
+                'definition': items[1],
+                'examples': None,
+                'synonyms': None
+            })
+        elif len(items) == 3:
+            definitions.append({
+                'pos': items[0],
+                'definition': items[1],
+                'examples': items[2],
+                'synonyms': None
+            })
+        elif len(items) == 4:
+            definitions.append({
+                'pos': items[0],
+                'definition': items[1],
+                'examples': items[2],
+                'synonyms': items[3]
+            })
     return definitions
 
 
