@@ -50,7 +50,7 @@ def test_lookup_define():
                            'meaning of.'),
             'examples': {("the contract will seek to define the client's "
                           "obligations")},
-            'synonyms': ['synonyms: explain', 'expound', 'interpret',
+            'synonyms': ['explain', 'expound', 'interpret',
                          'elucidate', 'explicate', 'describe', 'clarify',
                          'give the meaning of', 'state precisely',
                          'spell out', 'put into words', 'express in words']
@@ -66,7 +66,7 @@ def test_lookup_very():
     assert {'pos': 'adverb',
             'definition': 'in a high degree.',
             'examples': {'very much so'},
-            'synonyms': ['synonyms: extremely', 'exceedingly', 'exceptionally',
+            'synonyms': ['extremely', 'exceedingly', 'exceptionally',
                          'especially', 'tremendously', 'immensely', 'vastly',
                          'hugely', 'extraordinarily', 'extra', 'excessively',
                          'overly', 'over', 'abundantly', 'inordinately',
@@ -89,7 +89,7 @@ def test_lookup_very():
             'definition': ('actual; precise (used to emphasize the exact '
                            'identity of a particular person or thing).'),
             'examples': {'those were his very words'},
-            'synonyms': ['synonyms: exact', 'actual', 'precise', 'particular',
+            'synonyms': ['exact', 'actual', 'precise', 'particular',
                          'specific', 'distinct', 'ideal', 'perfect',
                          'appropriate', 'suitable', 'apt', 'fitting', 'fit',
                          'right', 'just right', 'made to order',
