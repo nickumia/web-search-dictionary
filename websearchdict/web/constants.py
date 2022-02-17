@@ -7,6 +7,17 @@ POS_TAGS = [
     'determiner'
 ]
 
+BAD_TAGS = [
+    r'<style>.*?</style>',
+    r'<img .*?">',
+    r'<input .*?">',
+    r'<br>',
+    r'<script.*?</script>',
+    r'<!--.*?-->',
+    r'<meta .*?">',
+    r'<hr( +)?>'
+]
+
 MISC = ['G', 'o', 'g', 'l', 'e', 'Videos', 'Please click', 'here', 'All',
         'News', 'Images', 'Videos', 'Maps', 'Shopping', 'Books', '×',
         'Search tools', 'Any time', 'Past hour', 'Past 24 hours', '',
@@ -28,6 +39,7 @@ BAD_PHRASES = [
     r'([a-z]|[A-Z]){3} [0-9]{1,2}, [0-9]{4}',
     r'[0-9]{1,2}:[0-9]{2}',
     r'(\$?[0-9]+\.[0-9]{1,2}|\([0-9]+\)|^[0-9]$)',
+    r'[0-9]+ days ago',
     # Misc
     r'.*&#; Best Sellers &#;.*',
     r'.*&#8250;.*',

@@ -18,21 +18,13 @@ def LXML_preprocessHTML(web_response):
         # Make html safe
         content = content.replace('&', '&amp;')
         content = content.replace('<=', '&lt;=')
-        # Ignore all (style|img|br|script|comment|meta|input|hr) tags.
-        content = re.sub(r'<style>.*?</style>', '', content,
-                         flags=re.I | re.M | re.U)
-        content = re.sub(r'<img .*?">', '', content)
-        content = re.sub(r'<input .*?">', '', content)
-        content = re.sub(r'<br>', '', content)
+        # '<' '>' signs in JS code sucks..
         content = re.sub(r'<([a-z]|[A-Z])(\[[0-9]+\])?\.length',
                          '&lt;a.length', content)
-        content = re.sub(r'<script.*?</script>', '', content)
-        content = re.sub(r'<!--.*?-->', '', content)
-        content = re.sub(r'<meta .*?">', '', content)
-        content = re.sub(r'<hr( +)?>', '', content)
+        # Ignore all (style|img|br|script|comment|meta|input|hr) tags.
+        for unsafe_tag in wwc.BAD_TAGS:
+            content = re.sub(unsafe_tag, '', content)
 
-        # TODO: Fix timing of this replacement
-        content = re.sub(r'[0-9]+ days ago', '', content)
         # print(content)
         hdoc = etree.fromstring(content)
     return hdoc
@@ -85,28 +77,39 @@ def LXML_parseHTML(parsed, target):
 
 
 def exampleParser(examples):
+    examples = set(examples.split('"'))
     try:
-        examples = set(examples.split('"'))
-        try:
-            examples.remove('')
-            examples.remove(' ')
-        except KeyError:
-            pass
-    except TypeError:
-        examples = ["None."]
+        examples.remove('')
+        examples.remove(' ')
+    except KeyError:
+        pass
     return examples
 
 
 def queueToDict(queue):
+    '''
+    Definitions always start with a POS Tag.  This function iterates
+    through the parsed content and combines elements that are related.
+    Possible combinations:
+        - pos, definition
+        - pos, definition, example
+        - pos, definition, example, synonyms
+    Example Impossible combinations:
+        - pos, definition, synonyms
+        - pos, example
+        - pos, synonyms
+    '''
     definitions = []
     transfer = None
 
     while len(queue) > 0:
+        # Always start with POS
         if transfer is not None:
             items = [transfer]
         else:
             items = [queue.pop(0)]
 
+        # Iterate until the next POS is hit
         current_thing = None
         while current_thing not in wwc.POS_TAGS:
             try:
@@ -115,6 +118,7 @@ def queueToDict(queue):
                     items.append(current_thing)
             except IndexError:
                 break
+        # Save POS for next time
         transfer = current_thing
 
         if len(items) == 2:
