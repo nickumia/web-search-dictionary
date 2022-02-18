@@ -34,9 +34,9 @@ MISC = ['G', 'o', 'g', 'l', 'e', 'Videos', 'Please click', 'here', 'All',
         'Related searches', 'Next &gt;', '&nbsp;-&nbsp;', 'Learn more',
         'Sign in', 'Settings', 'Privacy', 'Terms', 'People also ask',
         'See results about', '·', 'More results', 'Rating', 'View all',
-        'Best dictionary website', 'Duration:', 'In stock',
+        'Best dictionary website', 'Duration:', 'In stock', 'Past participle:'
         'Cambridge Advanced...', 'Webster\'s Dictionary', 'Urban Dictionary',
-        'Past participle:',]
+        'Oxford English Di...', 'Dictionary sites for students']
 # &#; Best Sellers &#;
 # r'(Results )?[0-9]+ - [0-9]+ of [0-9]+',
 
