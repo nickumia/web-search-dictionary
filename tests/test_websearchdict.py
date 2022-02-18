@@ -10,7 +10,7 @@ def test_lookup():
     definitions = websearchdict.lookup('equal')
     # print(definitions.getDefinitions())
     assert definitions.getPronounciation() == '/ˈēkwəl/ | '
-    assert 5 <= len(definitions.getDefinitions()) <= 9
+    assert 2 <= len(definitions.getDefinitions()) <= 6
     assert__pos(definitions.getDefinitions())
 
 
@@ -37,7 +37,7 @@ def test_lookup_a():
             'examples': ['"a man came out of the room"'],
             'synonyms': None} in definitions.values()
     # This is weird, I get 3 locally and GA gets 10 remotely :/
-    assert 3 <= len(definitions) <= 10
+    assert 5 <= len(definitions) <= 9
     assert__pos(definitions)
 
 
@@ -55,7 +55,7 @@ def test_lookup_define():
                          'give the meaning of', 'state precisely',
                          'spell out', 'put into words', 'express in words']
             } in definitions.values()
-    assert 4 <= len(definitions) <= 8
+    assert 2 <= len(definitions) <= 4
     assert__pos(definitions)
 
 
@@ -95,7 +95,7 @@ def test_lookup_very():
                          'right', 'just right', 'made to order',
                          'tailor-made', 'spot on', 'just the job']
             } in definitions.values()
-    assert 2 <= len(definitions) <= 7
+    assert 2 <= len(definitions) <= 4
     assert__pos(definitions)
 
 
@@ -128,8 +128,7 @@ def test_lookup_affair_affairs():
     assert__pos(definitions)
     assert__pos(definitions2)
 
-    assert 2 <= len(definitions) <= 6
-    assert 2 <= len(definitions2) <= 6
+    assert 2 == len(definitions) == len(definitions2)
 
 
 def test_lookup_direct():
@@ -149,7 +148,7 @@ def test_lookup_direct():
             } in definitions.values()
     assert__pos(definitions)
 
-    assert 6 <= len(definitions) <= 12
+    assert 7 <= len(definitions) <= 11
 
 
 def assert__pos(definitions):

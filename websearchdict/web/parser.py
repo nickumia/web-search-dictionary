@@ -35,6 +35,7 @@ def LXML_parseHTML(parsed, target):
     current_pos = None
     queue = []
 
+    parent = etree.ElementTree(parsed)
     for e in parsed.iter():
         if e.text is not None:
             # print("|" + e.text + "|")
@@ -42,6 +43,7 @@ def LXML_parseHTML(parsed, target):
             tag_ = e.tag.strip()
             # print("|" + text_ + "|")
             # print("|" + tag_ + "|")
+            # print(parent.getpath(e))
             if re.match(wwc.PRONUNCIATION, text_):
                 # Pronounciation
                 pronounciation += text_ + ' | '
@@ -58,7 +60,7 @@ def LXML_parseHTML(parsed, target):
                     filtered = notBad(text_, current_pos, target, example=True)
                     if filtered is not None and current_pos is not None:
                         queue.append((wwc.ID_EXAMPLE, filtered))
-            elif tag_ == 'div':
+            elif tag_ == 'div' and '/a/' not in parent.getpath(e):
                 # Definition
                 filtered = notBad(text_, current_pos, target)
                 if filtered is not None and current_pos is not None:
