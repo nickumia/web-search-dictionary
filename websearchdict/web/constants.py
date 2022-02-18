@@ -37,7 +37,7 @@ BAD_PHRASES = [
     r'Definition of ([a-z]|[A-z])+(.*)?',
     r'How to pronounce ([a-z]|[A-z])+',
     r'Example (of )?([a-z]|[A-z])+( .*)?',
-    r'[a-zA-Z]+[ \([a-zA-Z]+\)]?[(d|D)efinition |(and|&) |(m|M)eaning|'
+    r'[a-zA-Z]+( \([a-zA-Z]+\))?[(d|D)efinition |(and|&) |(m|M)eaning|'
     r',| |(s|S)ynonyms?|(e|E)xamples?]+ \| .*',
     r'(A Definition)? &amp; Meaning (-|\|) ',
     r'Meaning of ([a-z]|[A-z])+( .*)?',

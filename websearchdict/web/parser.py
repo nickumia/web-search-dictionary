@@ -38,9 +38,11 @@ def LXML_parseHTML(parsed, target):
 
     for e in parsed.iter():
         if e.text is not None:
-            # print(e.text)
+            # print("|" + e.text + "|")
             text_ = e.text.strip().replace('\xa0', '').strip()
             tag_ = e.tag.strip()
+            # print("|" + text_ + "|")
+            # print("|" + tag_ + "|")
             if re.match(wwc.PRONUNCIATION, text_):
                 # Pronounciation
                 pronounciation += text_ + ' | '
@@ -153,7 +155,8 @@ def notBad(possible_definition, pos, word):
 
     # Not a generic web blurb
     rules.append((lambda x: x not in wwc.MISC))
-    rules.append((lambda x, y: y.lower() not in x.lower()))
+    rules.append((lambda x, y: not re.match(
+        r'.*?\b%s\b.*?' % (y.lower()), x.lower())))
 
     for rule in rules:
         try:

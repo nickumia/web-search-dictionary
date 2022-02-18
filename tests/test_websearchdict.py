@@ -128,6 +128,25 @@ def test_lookup_affair_affairs():
     assert 3 <= len(definitions2) <= 8
 
 
+def test_lookup_direct():
+    ''' Test that it doesn't accidentally match 'direct' in 'direction' '''
+    entry = websearchdict.lookup('direct')
+    definitions = entry.getDefinitions()
+
+    assert {'pos': 'adjective',
+            'definition': ('extending or moving from one place to another by '
+                           'the shortest way without changing direction or '
+                           'stopping.'),
+            'examples': {'there was no direct flight that day'},
+            'synonyms': ['straight', 'undeviating', 'unswerving', 'shortest',
+                         'quickest', 'nonstop', 'unbroken', 'uninterrupted',
+                         'straight through', 'through']
+            } in definitions.values()
+    assert__pos(definitions)
+
+    assert 6 <= len(definitions) <= 12
+
+
 def assert__pos(definitions):
     for sense in definitions:
         assert definitions[sense]['pos'] in wwc.POS_TAGS
