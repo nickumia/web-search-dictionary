@@ -42,7 +42,7 @@ BAD_PHRASES = [
     r'(A Definition)? &amp; Meaning (-|\|) ',
     r'Meaning of ([a-z]|[A-z])+( .*)?',
     r'Past tense of [a-zA-Z]+',
-    r'[a-zA-Z]+ meaning',
+    r'$[a-zA-Z]+ meaning',
     r'.*? - Investopedia',
     r'.*(t|T)hesaurus.*',
     # Dates/Times/Money/Ratings
