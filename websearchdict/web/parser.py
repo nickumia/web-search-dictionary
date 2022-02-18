@@ -33,7 +33,6 @@ def LXML_preprocessHTML(web_response):
 def LXML_parseHTML(parsed, target):
     pronounciation = ""
     current_pos = None
-    examples = ""
     queue = []
 
     for e in parsed.iter():
@@ -49,105 +48,71 @@ def LXML_parseHTML(parsed, target):
             elif tag_ == 'span' and text_ in wwc.POS_TAGS:
                 # POS
                 current_pos = text_
-            elif '"' in text_:
-                # Example
-                examples += text_ + ' '
-                if text_[-1] != '"':
-                    continue
-                if text_[-1] == '"':
-                    examples = exampleParser(examples)
-                    queue.append(examples)
-                    examples = ""
-            else:
-                # Still an example
-                if examples != "":
-                    examples += text_ + ' '
-                    continue
+            elif tag_ == 'span':
+                # Examples | Synonyms
+                if text_[0:10] == 'synonyms: ':
+                    syns = text_.replace('synonyms: ', '')
+                    syns = syns.split(', ')
+                    queue.append((wwc.ID_SYNONYM, syns))
+                else:
+                    filtered = notBad(text_, current_pos, target, example=True)
+                    if filtered is not None and current_pos is not None:
+                        queue.append((wwc.ID_EXAMPLE, filtered))
+            elif tag_ == 'div':
                 # Definition
                 filtered = notBad(text_, current_pos, target)
-                # Check for synonym
                 if filtered is not None and current_pos is not None:
-                    if filtered[0:10] == 'synonyms: ':
-                        syns = filtered.replace('synonyms: ', '')
-                        syns = syns.split(', ')
-                        queue.append(syns)
-                    else:
-                        queue.append(current_pos)
-                        queue.append(filtered)
+                    queue.append((wwc.ID_POS, current_pos))
+                    queue.append((wwc.ID_DEFINITION, filtered))
 
     return html.unescape(pronounciation), queueToDict(queue)
 
 
-def exampleParser(examples):
-    examples = set(examples.split('"'))
-    try:
-        examples.remove('')
-        examples.remove(' ')
-    except KeyError:
-        pass
-    return examples
-
-
 def queueToDict(queue):
     '''
-    Definitions always start with a POS Tag.  This function iterates
-    through the parsed content and combines elements that are related.
-    Possible combinations:
-        - pos, definition
-        - pos, definition, example
-        - pos, definition, example, synonyms
-    Example Impossible combinations:
-        - pos, definition, synonyms
-        - pos, example
-        - pos, synonyms
+    All items are tagged with what type of data it is,
+    - POS
+    - DEFINITION
+    - EXAMPLE
+    - SYNONYM
+
+    This groups the items in the list accordingly.  Groups always begin
+    with a POS.
     '''
     definitions = []
-    transfer = None
+    pos = None
+    fed = None
+    exa = []
+    syn = None
 
     while len(queue) > 0:
         # Always start with POS
-        if transfer is not None:
-            items = [transfer]
+        if pos is None:
+            pos = queue.pop(0)[1]
+
+        if queue[0][0] != wwc.ID_POS:
+            current_thing = queue.pop(0)
+            if current_thing[0] == wwc.ID_DEFINITION:
+                fed = current_thing[1]
+            elif current_thing[0] == wwc.ID_EXAMPLE:
+                exa.append(current_thing[1])
+            elif current_thing[0] == wwc.ID_SYNONYM:
+                syn = current_thing[1]
         else:
-            items = [queue.pop(0)]
-
-        # Iterate until the next POS is hit
-        current_thing = None
-        while current_thing not in wwc.POS_TAGS:
-            try:
-                current_thing = queue.pop(0)
-                if current_thing not in wwc.POS_TAGS:
-                    items.append(current_thing)
-            except IndexError:
-                break
-        # Save POS for next time
-        transfer = current_thing
-
-        if len(items) == 2:
+            # Summary results in entry
             definitions.append({
-                'pos': items[0],
-                'definition': items[1],
-                'examples': None,
-                'synonyms': None
+                'pos': pos,
+                'definition': fed,
+                'examples': exa,
+                'synonyms': syn
             })
-        elif len(items) == 3:
-            definitions.append({
-                'pos': items[0],
-                'definition': items[1],
-                'examples': items[2],
-                'synonyms': None
-            })
-        elif len(items) == 4:
-            definitions.append({
-                'pos': items[0],
-                'definition': items[1],
-                'examples': items[2],
-                'synonyms': items[3]
-            })
+            pos = None
+            exa = []
+            syn = None
     return definitions
 
 
-def notBad(possible_definition, pos, word):
+def notBad(possible_definition, pos, word, example=False):
     rules = []
     results = []
 
@@ -155,8 +120,12 @@ def notBad(possible_definition, pos, word):
 
     # Not a generic web blurb
     rules.append((lambda x: x not in wwc.MISC))
-    rules.append((lambda x, y: not re.match(
-        r'.*?\b%s\b.*?' % (y.lower()), x.lower())))
+    if not example:
+        # Not itself
+        rules.append((lambda x, y: not re.match(
+            r'.*?\b%s\b.*?' % (y.lower()), x.lower())))
+    # Not one word
+    rules.append((lambda x: len(x.strip().split(' ')) > 1))
 
     for rule in rules:
         try:
@@ -169,6 +138,7 @@ def notBad(possible_definition, pos, word):
                 if word[-1] == 's':
                     results.append(rule(possible_definition, word[0:-1]))
             results.append(rule(possible_definition, 'define'))
+    # print(results)
 
     ''' Postprocessing to weed out null results '''
 

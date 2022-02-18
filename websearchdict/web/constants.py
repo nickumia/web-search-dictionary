@@ -1,4 +1,9 @@
 
+ID_POS = 0
+ID_DEFINITION = 1
+ID_EXAMPLE = 2
+ID_SYNONYM = 3
+
 POS_TAGS = [
     'noun',
     'adjective',
@@ -37,8 +42,8 @@ BAD_PHRASES = [
     r'Definition of ([a-z]|[A-z])+(.*)?',
     r'How to pronounce ([a-z]|[A-z])+',
     r'Example (of )?([a-z]|[A-z])+( .*)?',
-    r'[a-zA-Z]+( \([a-zA-Z]+\))?[(d|D)efinition |(and|&) |(m|M)eaning|'
-    r',| |(s|S)ynonyms?|(e|E)xamples?]+ \| .*',
+    r'[a-zA-Z]+( \([a-zA-Z]+\))?[(d|D)efinition |(and|&|&amp;) |(m|M)eaning|'
+    r',| |(s|S)ynonyms?|(e|E)xamples?]+ (\||-) .*',
     r'(A Definition)? &amp; Meaning (-|\|) ',
     r'Meaning of ([a-z]|[A-z])+( .*)?',
     r'Past tense of [a-zA-Z]+',
@@ -60,7 +65,7 @@ BAD_PHRASES = [
     r'...|Best dictionary website|In stock|Wikipedia|Noun:?|Collins English '
     r'Di...|Past participle:|Adverb and Its Kinds|Adjective:?|Verb:?|Oxford '
     r'English Di...| ?sites for students|He/she/it:|People also search for:|'
-    r'Superlative:|Adv:)'
+    r'Superlative:|Adv:)', r'&'
 ]
 
 PRONUNCIATION = r'/(&#|[a-z}|[A-Z]|[0-9]|;|,|[^a-zA-Z\d\s])+/'

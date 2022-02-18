@@ -34,7 +34,7 @@ def test_lookup_a():
     assert {'pos': 'determiner',
             'definition': ('used when referring to someone or something for '
                            'the first time in a text or conversation.'),
-            'examples': {'a man came out of the room'},
+            'examples': ['"a man came out of the room"'],
             'synonyms': None} in definitions.values()
     # This is weird, I get 3 locally and GA gets 10 remotely :/
     assert 3 <= len(definitions) <= 10
@@ -48,8 +48,8 @@ def test_lookup_define():
     assert {'pos': 'verb',
             'definition': ('state or describe exactly the nature, scope, or '
                            'meaning of.'),
-            'examples': {("the contract will seek to define the client's "
-                          "obligations")},
+            'examples': [('"the contract will seek to define the client\'s '
+                          'obligations"')],
             'synonyms': ['explain', 'expound', 'interpret',
                          'elucidate', 'explicate', 'describe', 'clarify',
                          'give the meaning of', 'state precisely',
@@ -65,7 +65,7 @@ def test_lookup_very():
     print(definitions)
     assert {'pos': 'adverb',
             'definition': 'in a high degree.',
-            'examples': {'very much so'},
+            'examples': ['"very much so"'],
             'synonyms': ['extremely', 'exceedingly', 'exceptionally',
                          'especially', 'tremendously', 'immensely', 'vastly',
                          'hugely', 'extraordinarily', 'extra', 'excessively',
@@ -88,14 +88,14 @@ def test_lookup_very():
     assert {'pos': 'adjective',
             'definition': ('actual; precise (used to emphasize the exact '
                            'identity of a particular person or thing).'),
-            'examples': {'those were his very words'},
+            'examples': ['"those were his very words"'],
             'synonyms': ['exact', 'actual', 'precise', 'particular',
                          'specific', 'distinct', 'ideal', 'perfect',
                          'appropriate', 'suitable', 'apt', 'fitting', 'fit',
                          'right', 'just right', 'made to order',
                          'tailor-made', 'spot on', 'just the job']
             } in definitions.values()
-    assert 3 <= len(definitions) <= 7
+    assert 2 <= len(definitions) <= 7
     assert__pos(definitions)
 
 
@@ -108,10 +108,14 @@ def test_lookup_world():
 def test_lookup_or():
     entry = websearchdict.lookup('or')
     definitions = entry.getDefinitions()
+    print(definitions)
     assert__pos(definitions)
     assert {'pos': 'conjunction',
-            'definition': 'either.',
-            'examples': {'to love is the one way to know or God or man'},
+            'definition': 'used to link alternatives.',
+            'examples': ['"a cup of tea or coffee"',
+                         ('"the espionage novel, or, as it is known in the '
+                          'trade, the thriller"'),
+                         '"hurry up, or you\'ll miss it all"'],
             'synonyms': None} in definitions.values()
 
 
@@ -124,8 +128,8 @@ def test_lookup_affair_affairs():
     assert__pos(definitions)
     assert__pos(definitions2)
 
-    assert 3 <= len(definitions) <= 8
-    assert 3 <= len(definitions2) <= 8
+    assert 2 <= len(definitions) <= 6
+    assert 2 <= len(definitions2) <= 6
 
 
 def test_lookup_direct():
@@ -133,11 +137,12 @@ def test_lookup_direct():
     entry = websearchdict.lookup('direct')
     definitions = entry.getDefinitions()
 
+    print(definitions)
     assert {'pos': 'adjective',
             'definition': ('extending or moving from one place to another by '
                            'the shortest way without changing direction or '
                            'stopping.'),
-            'examples': {'there was no direct flight that day'},
+            'examples': ['"there was no direct flight that day"'],
             'synonyms': ['straight', 'undeviating', 'unswerving', 'shortest',
                          'quickest', 'nonstop', 'unbroken', 'uninterrupted',
                          'straight through', 'through']
