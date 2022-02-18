@@ -150,3 +150,6 @@ def notBad(possible_definition, pos, word, example=False):
             # print("_-_-_-_")
             return possible_definition
     return None
+
+# a = 'having the same characteristics or qualities as; similar to.'
+# print(notBad(a, 'asdf', 'like'))

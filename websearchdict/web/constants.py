@@ -12,7 +12,8 @@ POS_TAGS = [
     'determiner',
     'conjunction',
     'number',
-    'pronoun'
+    'pronoun',
+    'preposition'
 ]
 
 BAD_TAGS = [
