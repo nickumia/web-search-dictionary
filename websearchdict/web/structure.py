@@ -56,7 +56,7 @@ def acceptablePOS(possible_pos):
     if positive(possible_pos):
         return True
 
-    multi = possible_pos.strip().split(',')
+    multi = possible_pos.split(',')
     if all([positive(i) for i in multi]):
         return True
 
@@ -69,23 +69,12 @@ def notBad(possible_definition, pos, word, example=False):
 
     ''' Question whether the definition should be considered '''
 
-    # Not a generic web blurb
+    # Not a generic web blurb nor a POS
     rules.append((lambda x: x not in wwc.MISC))
-    # Not a POS
-    # rules.append((lambda x: len(x.strip().split(' ')) > 1))
-    rules.append((lambda x: x.strip().lower() not in wwc.POS_TAGS))
+    rules.append((lambda x: not acceptablePOS(x)))
 
     for rule in rules:
-        try:
-            results.append(rule(possible_definition))
-        except TypeError:
-            if pos != 'determiner':
-                # Word should not define itself
-                results.append(rule(possible_definition, word))
-                # TODO: Ignore lemmas
-                if word[-1] == 's':
-                    results.append(rule(possible_definition, word[0:-1]))
-            results.append(rule(possible_definition, 'define'))
+        results.append(rule(possible_definition))
     # print(results)
 
     ''' Postprocessing to weed out null results '''
@@ -94,8 +83,6 @@ def notBad(possible_definition, pos, word, example=False):
         for nonsense in wwc.BAD_PHRASES:
             possible_definition = re.sub(nonsense, '', possible_definition)
         if possible_definition not in ['', ' ']:
-            # print(possible_definition)
-            # print("_-_-_-_")
             return possible_definition
     return None
 
