@@ -151,6 +151,21 @@ def test_lookup_direct():
     assert 7 <= len(definitions) <= 11
 
 
+def test_lookup_be():
+    ''' Test that single word definitions are allowed '''
+    entry = websearchdict.lookup('direct')
+    definitions = entry.getDefinitions()
+
+    print(definitions)
+    assert {'pos': 'verb',
+            'definition': 'exist.',
+            'examples': ['"there are no easy answers"'],
+            'synonyms': ['exist', 'have being', 'have existence', 'live',
+                         'be alive', 'have life', 'breathe', 'draw breath',
+                         'be extant', 'be viable']} in definitions.values()
+    assert__pos(definitions)
+
+
 def assert__pos(definitions):
     for sense in definitions:
         assert definitions[sense]['pos'] in wwc.POS_TAGS
