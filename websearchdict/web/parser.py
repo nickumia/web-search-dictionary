@@ -41,9 +41,10 @@ def LXML_parseHTML(parsed, target):
             # print("|" + e.text + "|")
             text_ = e.text.strip().replace('\xa0', '').strip()
             tag_ = e.tag.strip()
+            p_ = parent.getpath(e)
             # print("|" + text_ + "|")
             # print("|" + tag_ + "|")
-            # print(parent.getpath(e))
+            # print(parent.getpath(e),)
             if re.match(wwc.PRONUNCIATION, text_):
                 # Pronounciation
                 pronounciation += text_ + ' | '
@@ -57,10 +58,13 @@ def LXML_parseHTML(parsed, target):
                     syns = syns.split(', ')
                     queue.append((wwc.ID_SYNONYM, syns))
                 else:
-                    filtered = notBad(text_, current_pos, target, example=True)
-                    if filtered is not None and current_pos is not None:
-                        queue.append((wwc.ID_EXAMPLE, filtered))
-            elif tag_ == 'div' and '/a/' not in parent.getpath(e):
+                    # TODO: watch out for this changing
+                    if not re.match(wwc.MARKETING, p_):
+                        filtered = notBad(text_, current_pos, target,
+                                          example=True)
+                        if filtered is not None and current_pos is not None:
+                            queue.append((wwc.ID_EXAMPLE, filtered))
+            elif tag_ == 'div' and '/a/' not in p_:
                 # Definition
                 filtered = notBad(text_, current_pos, target)
                 if filtered is not None and current_pos is not None:
