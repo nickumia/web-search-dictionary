@@ -26,7 +26,7 @@ def LXML_preprocessHTML(web_response):
         for unsafe_tag in wwc.BAD_TAGS:
             content = re.sub(unsafe_tag, '', content)
 
-        # print(content)
+        print(content)
         hdoc = etree.fromstring(content)
     return hdoc
 
