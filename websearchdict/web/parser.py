@@ -130,8 +130,9 @@ def notBad(possible_definition, pos, word, example=False):
         # Not itself
         rules.append((lambda x, y: not re.match(
             r'.*?\b%s\b.*?' % (y.lower()), x.lower())))
-    # Not one word
-    rules.append((lambda x: len(x.strip().split(' ')) > 1))
+    # Not a POS
+    # rules.append((lambda x: len(x.strip().split(' ')) > 1))
+    rules.append((lambda x: x.strip().lower() not in wwc.POS_TAGS))
 
     for rule in rules:
         try:
