@@ -203,7 +203,7 @@ def test_lookup_all():
 
 
 def test_lookup_visible():
-    ''' This word seems to fail reliably outside of this repo.. trying to test '''
+    ''' This word seems to fail reliably outside of this repo..so tests '''
     entry = websearchdict.lookup('visible')
     definitions = entry.getDefinitions()
 
