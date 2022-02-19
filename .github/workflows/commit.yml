@@ -1,5 +1,5 @@
 ---
-name: commit
+name: Tests
 
 on:
   push:

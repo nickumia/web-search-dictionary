@@ -1,4 +1,9 @@
 
+ID_POS = 0
+ID_DEFINITION = 1
+ID_EXAMPLE = 2
+ID_SYNONYM = 3
+
 POS_TAGS = [
     'noun',
     'adjective',
@@ -7,7 +12,8 @@ POS_TAGS = [
     'determiner',
     'conjunction',
     'number',
-    'pronoun'
+    'pronoun',
+    'preposition'
 ]
 
 BAD_TAGS = [
@@ -28,7 +34,12 @@ MISC = ['G', 'o', 'g', 'l', 'e', 'Videos', 'Please click', 'here', 'All',
         'Related searches', 'Next &gt;', '&nbsp;-&nbsp;', 'Learn more',
         'Sign in', 'Settings', 'Privacy', 'Terms', 'People also ask',
         'See results about', '·', 'More results', 'Rating', 'View all',
-        'Best dictionary website', 'Duration:']
+        'Best dictionary website', 'Duration:', 'In stock', 'Past participle:',
+        'Cambridge Advanced...', 'Webster\'s Dictionary', 'Urban Dictionary',
+        'Oxford English Di...', 'Dictionary sites for students',
+        'Class parts of speech', 'Dictionary sites online']
+# &#; Best Sellers &#;
+# r'(Results )?[0-9]+ - [0-9]+ of [0-9]+',
 
 BAD_PHRASES = [
     # Google suggestions / Dictionary Result Titles
@@ -37,30 +48,17 @@ BAD_PHRASES = [
     r'Definition of ([a-z]|[A-z])+(.*)?',
     r'How to pronounce ([a-z]|[A-z])+',
     r'Example (of )?([a-z]|[A-z])+( .*)?',
-    r'[a-zA-Z]+( \([a-zA-Z]+\))?[(d|D)efinition |(and|&) |(m|M)eaning|'
-    r',| |(s|S)ynonyms?|(e|E)xamples?]+ \| .*',
-    r'(A Definition)? &amp; Meaning (-|\|) ',
     r'Meaning of ([a-z]|[A-z])+( .*)?',
     r'Past tense of [a-zA-Z]+',
     r'$[a-zA-Z]+ meaning',
-    r'.*? - Investopedia',
-    r'.*(t|T)hesaurus.*',
     # Dates/Times/Money/Ratings
     r'([a-z]|[A-Z]){3} [0-9]{1,2}, [0-9]{4}',
     r'[0-9]{1,2}:[0-9]{2}',
     r'(\$?[0-9]+\.[0-9]{1,2}|\([0-9]+\)|^[0-9]$)',
     r'[0-9]+ days ago',
-    r'(Results )?[0-9]+ - [0-9]+ of [0-9]+',
     # Misc
-    r'.*&#; Best Sellers &#;.*',
-    r'.*&#8250;.*',
     r'.*?\?',
-    r'(Merriam-Webster|Vocabulary\.com|(Best English )?Dictionary(\.com)?|'
-    r'Purdue Online Writing Lab|Merriam...|Urban|Webster\'s|Cambridge Advanced'
-    r'...|Best dictionary website|In stock|Wikipedia|Noun:?|Collins English '
-    r'Di...|Past participle:|Adverb and Its Kinds|Adjective:?|Verb:?|Oxford '
-    r'English Di...| ?sites for students|He/she/it:|People also search for:|'
-    r'Superlative:|Adv:)'
 ]
+MARKETING = r'.*?/div/div/div/div\[[0-9]\]/div/span'
 
 PRONUNCIATION = r'/(&#|[a-z}|[A-Z]|[0-9]|;|,|[^a-zA-Z\d\s])+/'
