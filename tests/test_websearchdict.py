@@ -10,7 +10,7 @@ def test_lookup():
     definitions = websearchdict.lookup('equal')
     # print(definitions.getDefinitions())
     assert definitions.getPronounciation() == '/ˈēkwəl/ | '
-    assert 2 <= len(definitions.getDefinitions()) <= 6
+    assert 8 <= len(definitions.getDefinitions()) <= 12
     assert__pos(definitions.getDefinitions())
 
 
@@ -37,7 +37,7 @@ def test_lookup_a():
             'examples': ['"a man came out of the room"'],
             'synonyms': None} in definitions.values()
     # This is weird, I get 3 locally and GA gets 10 remotely :/
-    assert 5 <= len(definitions) <= 9
+    assert 8 <= len(definitions) <= 12
     assert__pos(definitions)
 
 
@@ -55,7 +55,7 @@ def test_lookup_define():
                          'give the meaning of', 'state precisely',
                          'spell out', 'put into words', 'express in words']
             } in definitions.values()
-    assert 2 <= len(definitions) <= 4
+    assert 8 <= len(definitions) <= 12
     assert__pos(definitions)
 
 
@@ -95,7 +95,7 @@ def test_lookup_very():
                          'right', 'just right', 'made to order',
                          'tailor-made', 'spot on', 'just the job']
             } in definitions.values()
-    assert 2 <= len(definitions) <= 4
+    assert 11 <= len(definitions) <= 15
     assert__pos(definitions)
 
 
@@ -112,10 +112,7 @@ def test_lookup_or():
     assert__pos(definitions)
     assert {'pos': 'conjunction',
             'definition': 'used to link alternatives.',
-            'examples': ['"a cup of tea or coffee"',
-                         ('"the espionage novel, or, as it is known in the '
-                          'trade, the thriller"'),
-                         '"hurry up, or you\'ll miss it all"'],
+            'examples': ['"a cup of tea or coffee"'],
             'synonyms': None} in definitions.values()
 
 
@@ -128,7 +125,7 @@ def test_lookup_affair_affairs():
     assert__pos(definitions)
     assert__pos(definitions2)
 
-    assert 2 == len(definitions) == len(definitions2)
+    assert 10 == len(definitions) == len(definitions2)
 
 
 def test_lookup_direct():
@@ -148,7 +145,7 @@ def test_lookup_direct():
             } in definitions.values()
     assert__pos(definitions)
 
-    assert 7 <= len(definitions) <= 11
+    assert 13 <= len(definitions) <= 17
 
 
 def test_lookup_be():
@@ -163,6 +160,19 @@ def test_lookup_be():
             'synonyms': ['exist', 'have being', 'have existence', 'live',
                          'be alive', 'have life', 'breathe', 'draw breath',
                          'be extant', 'be viable']} in definitions.values()
+    assert__pos(definitions)
+
+
+def test_lookup_used():
+    ''' Test that definitions are allowed to have the word in them  '''
+    entry = websearchdict.lookup('used')
+    definitions = entry.getDefinitions()
+
+    print(definitions)
+    assert {'pos': 'adjective',
+            'definition': 'having already been used.',
+            'examples': ['"scrawling on the back of a used envelope"'],
+            'synonyms': None} in definitions.values()
     assert__pos(definitions)
 
 

@@ -126,10 +126,6 @@ def notBad(possible_definition, pos, word, example=False):
 
     # Not a generic web blurb
     rules.append((lambda x: x not in wwc.MISC))
-    if not example:
-        # Not itself
-        rules.append((lambda x, y: not re.match(
-            r'.*?\b%s\b.*?' % (y.lower()), x.lower())))
     # Not a POS
     # rules.append((lambda x: len(x.strip().split(' ')) > 1))
     rules.append((lambda x: x.strip().lower() not in wwc.POS_TAGS))
@@ -158,5 +154,5 @@ def notBad(possible_definition, pos, word, example=False):
             return possible_definition
     return None
 
-# a = 'having the same characteristics or qualities as; similar to.'
-# print(notBad(a, 'asdf', 'like'))
+# a = 'secondhand.'
+# print(notBad(a, 'asdf', 'used'))
