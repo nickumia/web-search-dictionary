@@ -153,7 +153,7 @@ def test_lookup_direct():
 
 def test_lookup_be():
     ''' Test that single word definitions are allowed '''
-    entry = websearchdict.lookup('direct')
+    entry = websearchdict.lookup('be')
     definitions = entry.getDefinitions()
 
     print(definitions)
