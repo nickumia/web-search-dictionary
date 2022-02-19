@@ -88,3 +88,4 @@ def notBad(possible_definition, pos, word, example=False):
 
 # a = 'secondhand.'
 # print(notBad(a, 'asdf', 'used'))
+# print(acceptablePOS('N'))
