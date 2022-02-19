@@ -1,6 +1,6 @@
 
 import websearchdict
-import websearchdict.web.parser as wwp
+import websearchdict.web.structure as wws
 
 
 # Provide acceptable order of the number of definitions
@@ -204,4 +204,4 @@ def test_lookup_all():
 
 def assert__pos(definitions):
     for sense in definitions:
-        assert wwp.acceptablePOS(definitions[sense]['pos'])
+        assert wws.acceptablePOS(definitions[sense]['pos'])
