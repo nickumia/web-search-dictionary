@@ -1,6 +1,6 @@
 
 import websearchdict
-import websearchdict.web.constants as wwc
+import websearchdict.web.parser as wwp
 
 
 # Provide acceptable order of the number of definitions
@@ -176,6 +176,32 @@ def test_lookup_used():
     assert__pos(definitions)
 
 
+def test_lookup_all():
+    ''' Test that allows multiple POS tags in a single definition  '''
+    entry = websearchdict.lookup('all')
+    definitions = entry.getDefinitions()
+
+    print(definitions)
+    assert {'pos': 'predeterminer, determiner, pronoun',
+            'definition': ('used to refer to the whole quantity or extent of a'
+                           ' particular group or thing.'),
+            'examples': ['"all the people I met"'],
+            'synonyms': ['each of', 'each one of the', 'every one of the',
+                         'every single one of the', 'every', 'each and every',
+                         'every single', 'the whole of the',
+                         'every bit of the', 'the complete', 'the entire',
+                         'the totality of the', 'in its entirety', 'complete',
+                         'entire', 'total', 'full', 'utter', 'perfect',
+                         'all-out', 'greatest (possible)', 'maximum',
+                         'everyone', 'everybody', 'each/every person',
+                         'the (whole) lot', 'each one', 'each thing',
+                         'the sum', 'the total', 'the whole lot', 'everything',
+                         'every part', 'the whole amount', 'the total amount',
+                         'the entirety', 'the sum total', 'the aggregate']
+            } in definitions.values()
+    assert__pos(definitions)
+
+
 def assert__pos(definitions):
     for sense in definitions:
-        assert definitions[sense]['pos'] in wwc.POS_TAGS
+        assert wwp.acceptablePOS(definitions[sense]['pos'])

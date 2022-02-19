@@ -48,7 +48,7 @@ def LXML_parseHTML(parsed, target):
             if re.match(wwc.PRONUNCIATION, text_):
                 # Pronounciation
                 pronounciation += text_ + ' | '
-            elif tag_ == 'span' and text_ in wwc.POS_TAGS:
+            elif tag_ == 'span' and acceptablePOS(text_):
                 # POS
                 current_pos = text_
             elif tag_ == 'span':
@@ -116,6 +116,21 @@ def queueToDict(queue):
             exa = []
             syn = None
     return definitions
+
+
+def acceptablePOS(possible_pos):
+    '''
+    Check whether the text is a valid POS qualifier
+    '''
+    positive = (lambda x: x.strip().lower() in wwc.POS_TAGS)
+    if positive(possible_pos):
+        return True
+
+    multi = possible_pos.strip().split(',')
+    if all([positive(i) for i in multi]):
+        return True
+
+    return False
 
 
 def notBad(possible_definition, pos, word, example=False):
