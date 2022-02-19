@@ -38,7 +38,10 @@ MISC = ['G', 'o', 'g', 'l', 'e', 'Videos', 'Please click', 'here', 'All',
         'Best dictionary website', 'Duration:', 'In stock', 'Past participle:',
         'Cambridge Advanced...', 'Webster\'s Dictionary', 'Urban Dictionary',
         'Oxford English Di...', 'Dictionary sites for students', 'Merriam...',
-        'Class parts of speech', 'Dictionary sites online']
+        'Class parts of speech', 'Dictionary sites online',
+        'Adverb and Its Kinds', 'SI unit:',
+        'Dictionary buy', 'The Merriam...', 'Oxford Dictionary...',
+        'Black\'s Law Dictionary']
 # &#; Best Sellers &#;
 # r'(Results )?[0-9]+ - [0-9]+ of [0-9]+',
 
@@ -59,6 +62,7 @@ BAD_PHRASES = [
     r'[0-9]+ days ago',
     # Misc
     r'.*?\?',
+    r'[a-zA-Z\/]+:',
 ]
 MARKETING = r'.*?/div/div/div/div\[[0-9]\]/div/span'
 
