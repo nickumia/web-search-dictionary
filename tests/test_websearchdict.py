@@ -202,6 +202,15 @@ def test_lookup_all():
     assert__pos(definitions)
 
 
+def test_lookup_visible():
+    ''' This word seems to fail reliably outside of this repo.. trying to test '''
+    entry = websearchdict.lookup('visible')
+    definitions = entry.getDefinitions()
+
+    print(definitions)
+    assert__pos(definitions)
+
+
 def assert__pos(definitions):
     for sense in definitions:
         assert wws.acceptablePOS(definitions[sense]['pos'])

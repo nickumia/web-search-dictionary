@@ -25,7 +25,7 @@ BAD_TAGS = [
     r'<script.*?</script>',
     r'<!--.*?-->',
     r'<meta .*?">',
-    r'<hr( +)?>'
+    r'<hr ?.*?">'
 ]
 
 MISC = ['G', 'o', 'g', 'l', 'e', 'Videos', 'Please click', 'here', 'All',
