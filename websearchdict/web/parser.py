@@ -15,7 +15,7 @@ def LXML_preprocessHTML(web_response):
         content = web_response
     # Remove '<!doctype html>' header OR!
     # '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">'
-    if content[0:14] == '<!doctype html>':
+    if content[0:15] == '<!doctype html>':
         content = content[15:]
     elif content[0:63] == ('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 '
                            'Transitional//EN">'):
@@ -33,7 +33,7 @@ def LXML_preprocessHTML(web_response):
     for unsafe_tag in wwc.BAD_TAGS:
         content = re.sub(unsafe_tag, '', content)
 
-    print(content)
+    # print(content)
     hdoc = etree.fromstring(content)
     return hdoc
 
