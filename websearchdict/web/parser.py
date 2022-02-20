@@ -34,7 +34,7 @@ def LXML_preprocessHTML(web_response):
         content = re.sub(unsafe_tag, '', content)
 
     # print(content)
-    hdoc = etree.fromstring(content)
+    hdoc = etree.fromstring(html.unescape(content))
     return hdoc
 
 
@@ -53,9 +53,9 @@ def LXML_parseHTML(parsed, target, url):
             text_ = e.text.strip().replace('\xa0', '').strip()
             tag_ = e.tag.strip()
             p_ = parent.getpath(e)
-            # print("|" + text_ + "|")
-            # print("|" + tag_ + "|")
-            # print(parent.getpath(e),)
+            print("|" + text_ + "|")
+            print("|" + tag_ + "|")
+            print(parent.getpath(e),)
             if re.match(wwc.PRONUNCIATION, text_):
                 # Pronounciation
                 pronounciation += text_ + ' | '
