@@ -20,6 +20,7 @@ POS_TAGS = [
 BAD_TAGS = [
     r'<style>.*?</style>',
     r'<img .*?">',
+    r'<link .*?">',
     r'<input .*?">',
     r'<br>',
     r'<script.*?</script>',
@@ -67,3 +68,12 @@ BAD_PHRASES = [
 MARKETING = r'.*?/div/div/div/div\[[0-9]\]/div/span'
 
 PRONUNCIATION = r'/(&#|[a-z}|[A-Z]|[0-9]|;|,|[^a-zA-Z\d\s])+/'
+
+ERROR = [{
+    'pos': 'Unexpected Error :(',
+    'definition': ('It looks like there was a robot error that we could not '
+                   'avert.  Please try again later.'),
+    'examples': ['Try changing your environment, IP address, Machine, etc'],
+    'synonyms': ['We tried completing the captcha, but it was too advanced '
+                 'for us']
+}]

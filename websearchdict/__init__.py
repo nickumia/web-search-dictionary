@@ -11,7 +11,8 @@ def lookup(word, parser='lxml'):
 
     if parser == 'lxml':
         parsed = LXML_preprocessHTML(web_response)
-        pronounciation, definitions = LXML_parseHTML(parsed, word)
+        pronounciation, definitions = LXML_parseHTML(parsed, word,
+                                                     web_response.url)
 
     A.addPronounciation(pronounciation)
     for define in definitions:
