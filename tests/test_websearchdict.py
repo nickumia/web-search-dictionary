@@ -70,9 +70,9 @@ def test_lookup_very():
     assert definitions[0]['definition'] == 'in a high degree.'
     assert definitions[0]['examples'] == ['"very much so"']
     assert definitions[0]['synonyms'][0] == 'extremely'
-    assert definitions[0]['synonyms'][0] == 'exceedingly'
-    assert definitions[0]['synonyms'][0] == 'exceptionally'
-    assert definitions[0]['synonyms'][0] == 'especially'
+    assert definitions[0]['synonyms'][1] == 'exceedingly'
+    assert definitions[0]['synonyms'][2] == 'exceptionally'
+    assert definitions[0]['synonyms'][3] == 'especially'
     assert definitions[0]['synonyms'][-1] == 'sore'
     assert {'pos': 'adjective',
             'definition': ('actual; precise (used to emphasize the exact '
