@@ -62,8 +62,8 @@ def LXML_parseHTML(parsed, target, url):
             elif tag_ == 'span' and wws.acceptablePOS(text_):
                 # POS
                 current_pos = text_
-            elif tag_ == 'span':
-                # Examples | Synonyms
+            elif tag_ == 'span' and '/a/' not in p_:
+                # Definitions | Synonyms
                 if text_[0:10] == 'synonyms: ':
                     syns = html.unescape(text_.replace('synonyms: ', ''))
                     syns = syns.split(', ')
@@ -75,18 +75,15 @@ def LXML_parseHTML(parsed, target, url):
                                               example=True)
                         if filtered is not None and current_pos is not None:
                             filtered = html.unescape(filtered)
-                            if len(queue) > 0:
-                                queue.append((wwc.ID_EXAMPLE, filtered))
-                            else:
-                                queue.append((wwc.ID_POS, current_pos))
-                                queue.append((wwc.ID_DEFINITION, filtered))
+                            queue.append((wwc.ID_POS, current_pos))
+                            queue.append((wwc.ID_DEFINITION, filtered))
             elif tag_ == 'div' and '/a/' not in p_:
-                # Definition
+                # Examples
                 filtered = wws.notBad(text_, current_pos, target)
                 if filtered is not None and current_pos is not None:
                     filtered = html.unescape(filtered)
-                    queue.append((wwc.ID_POS, current_pos))
-                    queue.append((wwc.ID_DEFINITION, filtered))
+                    if len(queue) > 0:
+                        queue.append((wwc.ID_EXAMPLE, filtered))
 
     if queue == []:
         return 'none', wwc.ERROR
