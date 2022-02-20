@@ -65,7 +65,6 @@ BAD_PHRASES = [
     # Misc
     r'.*?\?',
     r'[a-zA-Z\/]+:',
-    r';',
 ]
 MARKETING = r'.*?/div/div/div/div\[[0-9]\]/div/span'
 
