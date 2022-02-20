@@ -1,8 +1,8 @@
 
-ID_POS = 0
-ID_DEFINITION = 1
-ID_EXAMPLE = 2
-ID_SYNONYM = 3
+ID_POS = "pos"
+ID_DEFINITION = "def"
+ID_EXAMPLE = "exa"
+ID_SYNONYM = "syn"
 
 POS_TAGS = [
     'noun',

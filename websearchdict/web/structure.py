@@ -86,6 +86,6 @@ def notBad(possible_definition, pos, word, example=False):
             return possible_definition
     return None
 
-# a = 'secondhand.'
+# a = 'used to link alternatives.'
 # print(notBad(a, 'asdf', 'used'))
 # print(acceptablePOS('N'))
