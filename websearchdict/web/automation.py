@@ -11,10 +11,6 @@ import websearchdict.web.constants as wwc
 
 random.seed(time.time())
 
-opts = FirefoxOptions()
-opts.add_argument("--headless")
-browser = webdriver.Firefox(options=opts)
-
 
 def generateRandomHeaders():
     headers = {
@@ -62,18 +58,32 @@ def checkForLimited(message):
     return False
 
 
-def backup(url):
+def backup(url, override=False):
     # print(url)
-    browser.get(url)
-    # iframes = browser.find_elements_by_tag_name('iframe')
-    frame = browser.find_element_by_xpath('//iframe[@title="reCAPTCHA"]')
-    browser.switch_to.frame(frame)
-    elem = browser.find_element_by_id('recaptcha-anchor')
-    click = ActionChains(browser)
-    click.click_and_hold(on_element=elem)
-    click.perform()
-    time.sleep(10)
-    click.release(elem)
-    time.sleep(3)
+    opts = FirefoxOptions()
 
-    return browser.page_source
+    if override:
+        browser = webdriver.Firefox(options=opts)
+        browser.get(url)
+        ok = input('Press enter when you are done with the captcha (Be sure '
+                   'to leave the brower open)')
+        print('Thank you for helping me!')
+    else:
+        opts.add_argument("--headless")
+        browser = webdriver.Firefox(options=opts)
+        browser.get(url)
+        # iframes = browser.find_elements_by_tag_name('iframe')
+        frame = browser.find_element_by_xpath('//iframe[@title="reCAPTCHA"]')
+        browser.switch_to.frame(frame)
+        elem = browser.find_element_by_id('recaptcha-anchor')
+        click = ActionChains(browser)
+        click.click_and_hold(on_element=elem)
+        click.perform()
+        time.sleep(10)
+        click.release(elem)
+        time.sleep(3)
+
+    new_html = browser.page_source
+    browser.close()
+
+    return new_html

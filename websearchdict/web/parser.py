@@ -38,14 +38,14 @@ def LXML_preprocessHTML(web_response):
     return hdoc
 
 
-def LXML_parseHTML(parsed, target, url):
+def LXML_parseHTML(parsed, target, url, override=False):
     pronounciation = ""
     current_pos = None
     queue = []
 
     if wwsu.checkForLimited(parsed):
         print('Sorry, we\'ve been flagged, trying to complete captcha..')
-        parsed = LXML_preprocessHTML(wwsu.backup(url))
+        parsed = LXML_preprocessHTML(wwsu.backup(url, override=override))
 
     parent = etree.ElementTree(parsed)
     for e in parsed.iter():

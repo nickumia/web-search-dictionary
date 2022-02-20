@@ -1,7 +1,7 @@
 
 import websearchdict
 
-entry = websearchdict.lookup('look')
+entry = websearchdict.lookup('look', override=True)
 # Get the pronounciation for the word
 print(entry.getPronounciation())
 
