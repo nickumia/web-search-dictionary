@@ -26,6 +26,15 @@ def generateRandomHeaders():
 
     headers['Accept-Language'] = \
         'en-US,en;q=0.%d' % int(random.random() * 10)
+    headers['pid'] = "%d" % int(random.random() * 10)
+    headers['spid'] = "%d" % int(random.random() * 10)
+    r = int(random.random() * 10) + 1
+    s = int(random.random() * 10)
+    random_key = ''.join(random.choices(
+        string.ascii_uppercase + string.digits, k=r))
+    random_value = ''.join(random.choices(
+        string.ascii_uppercase + string.digits, k=s))
+    headers[random_key] = random_value
 
     headers['user-agent'] = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
                              'AppleWebKit/537.36 (KHTML, like Gecko) '
