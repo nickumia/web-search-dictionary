@@ -50,7 +50,8 @@ def LXML_parseHTML(parsed, target, url):
     parent = etree.ElementTree(parsed)
     for e in parsed.iter():
         if e.text is not None:
-            text_ = e.text.strip().strip().encode("utf-8")
+            text_ = e.text.strip().strip() \
+                .encode('utf-8').decode('utf-8', 'ignore')
             tag_ = e.tag.strip()
             p_ = parent.getpath(e)
             # print("|" + text_ + "|")
