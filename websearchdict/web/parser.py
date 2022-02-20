@@ -58,14 +58,14 @@ def LXML_parseHTML(parsed, target, url):
             # print(parent.getpath(e),)
             if re.match(wwc.PRONUNCIATION, text_):
                 # Pronounciation
-                pronounciation += html.unescape(text_) + ' | '
+                pronounciation += text_ + ' | '
             elif tag_ == 'span' and wws.acceptablePOS(text_):
                 # POS
                 current_pos = text_
-            elif tag_ == 'span' and '/a/' not in p_:
-                # Definitions | Synonyms
+            elif tag_ == 'span':
+                # Examples | Synonyms
                 if text_[0:10] == 'synonyms: ':
-                    syns = html.unescape(text_.replace('synonyms: ', ''))
+                    syns = text_.replace('synonyms: ', '')
                     syns = syns.split(', ')
                     queue.append((wwc.ID_SYNONYM, syns))
                 else:
@@ -73,18 +73,16 @@ def LXML_parseHTML(parsed, target, url):
                     if not re.match(wwc.MARKETING, p_):
                         filtered = wws.notBad(text_, current_pos, target,
                                               example=True)
-                        if filtered is not None and current_pos is not None:
-                            filtered = html.unescape(filtered)
-                            queue.append((wwc.ID_POS, current_pos))
-                            queue.append((wwc.ID_DEFINITION, filtered))
+                        if filtered is not None and current_pos is not None \
+                           and len(queue) > 0:
+                            queue.append((wwc.ID_EXAMPLE, filtered))
             elif tag_ == 'div' and '/a/' not in p_:
-                # Examples
+                # Definition
                 filtered = wws.notBad(text_, current_pos, target)
                 if filtered is not None and current_pos is not None:
-                    filtered = html.unescape(filtered)
-                    if len(queue) > 0:
-                        queue.append((wwc.ID_EXAMPLE, filtered))
+                    queue.append((wwc.ID_POS, current_pos))
+                    queue.append((wwc.ID_DEFINITION, filtered))
 
     if queue == []:
         return 'none', wwc.ERROR
-    return pronounciation, wws.queueToDict(queue)
+    return html.unescape(pronounciation), wws.queueToDict(queue)
