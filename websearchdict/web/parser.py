@@ -34,7 +34,7 @@ def LXML_preprocessHTML(web_response):
         content = re.sub(unsafe_tag, '', content)
 
     # print(content)
-    hdoc = etree.fromstring(html.unescape(content))
+    hdoc = etree.fromstring(content)
     return hdoc
 
 
@@ -50,7 +50,7 @@ def LXML_parseHTML(parsed, target, url):
     parent = etree.ElementTree(parsed)
     for e in parsed.iter():
         if e.text is not None:
-            text_ = e.text.strip().replace('\xa0', '').strip()
+            text_ = html.unescape(e.text.strip().replace('\xa0', '').strip())
             tag_ = e.tag.strip()
             p_ = parent.getpath(e)
             print("|" + text_ + "|")
