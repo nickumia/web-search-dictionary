@@ -10,8 +10,7 @@ import websearchdict.web.automation as wwsu
 
 def LXML_preprocessHTML(web_response):
     try:
-        # content = web_response.content.decode("iso-8859-1")
-        content = web_response.content.decode("utf-8")
+        content = web_response.content.decode("iso-8859-1")
     except AttributeError:
         content = web_response
     # Remove '<!doctype html>' header OR!
@@ -51,7 +50,8 @@ def LXML_parseHTML(parsed, target, url):
     parent = etree.ElementTree(parsed)
     for e in parsed.iter():
         if e.text is not None:
-            text_ = e.text.strip().replace('\xa0', '').strip()
+            text_ = e.text.strip() \
+                        .strip().decode('utf-8', 'ignore').encode("utf-8")
             tag_ = e.tag.strip()
             p_ = parent.getpath(e)
             # print("|" + text_ + "|")
