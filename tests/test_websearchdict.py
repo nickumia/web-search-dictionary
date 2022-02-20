@@ -9,7 +9,10 @@ import websearchdict.web.structure as wws
 def test_lookup():
     definitions = websearchdict.lookup('equal')
     # print(definitions.getDefinitions())
-    assert definitions.getPronounciation() == '/ˈēkwəl/ | '
+    assert any(
+        [definitions.getPronounciation() == '/ˈēkwəl/ | ',
+         definitions.getPronounciation() == '/ËÄkwÉl/ | ']
+    )
     assert 8 <= len(definitions.getDefinitions()) <= 12
     assert__pos(definitions.getDefinitions())
 
