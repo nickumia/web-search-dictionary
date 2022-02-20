@@ -11,7 +11,8 @@ def test_lookup():
     # print(definitions.getDefinitions())
     assert any(
         [definitions.getPronounciation() == '/ˈēkwəl/ | ',
-         definitions.getPronounciation() == '/ËÄkwÉl/ | ']
+         definitions.getPronounciation() == '/ËÄkwÉl/ | ',
+         definitions.getPronounciation() == '/ˈçkwəl/ | ']
     )
     assert 8 <= len(definitions.getDefinitions()) <= 12
     assert__pos(definitions.getDefinitions())
