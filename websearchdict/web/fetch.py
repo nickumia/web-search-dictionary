@@ -15,8 +15,8 @@ def google_search(word):
     }
     session.cookies.clear()
     r = session.get(url,
-                    params=payload,
-                    headers=wwa.generateRandomHeaders())
+                    params=payload)
+    #                headers=wwa.generateRandomHeaders())
 
     # print(r.request.headers)
     return r
