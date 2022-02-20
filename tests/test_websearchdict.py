@@ -95,7 +95,7 @@ def test_lookup_very():
                          'right', 'just right', 'made to order',
                          'tailor-made', 'spot on', 'just the job']
             } in definitions.values()
-    assert 11 <= len(definitions) <= 15
+    assert 10 <= len(definitions) <= 15
     assert__pos(definitions)
 
 
