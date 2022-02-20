@@ -82,7 +82,7 @@ def test_lookup_very():
                          'awfully', 'terribly', 'devilishly', 'madly',
                          'majorly', 'seriously', 'desperately', 'mega',
                          'ultra', 'oh-so', 'too-too', 'stinking', 'mucho',
-                         'damn', 'damned', 'too &#8230; for words', 'devilish',
+                         'damn', 'damned', 'too  for words', 'devilish',
                          'hellish', 'frightfully', 'ever so', 'well', 'bloody',
                          'dead', 'dirty', 'jolly', 'fair', 'real', 'mighty',
                          'powerful', 'awful', 'plumb', 'darned', 'way',

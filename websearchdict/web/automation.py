@@ -67,7 +67,7 @@ def backup(url, override=False):
         browser.get(url)
         ok = input('Press enter when you are done with the captcha (Be sure '
                    'to leave the brower open)')
-        print('Thank you for helping me!')
+        print('Thank you for helping me! %s' % ok)
     else:
         opts.add_argument("--headless")
         browser = webdriver.Firefox(options=opts)
