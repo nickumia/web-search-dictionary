@@ -53,9 +53,9 @@ def LXML_parseHTML(parsed, target, url):
             text_ = html.unescape(e.text.strip().replace('\xa0', '').strip())
             tag_ = e.tag.strip()
             p_ = parent.getpath(e)
-            print("|" + text_ + "|")
-            print("|" + tag_ + "|")
-            print(parent.getpath(e),)
+            # print("|" + text_ + "|")
+            # print("|" + tag_ + "|")
+            # print(parent.getpath(e),)
             if re.match(wwc.PRONUNCIATION, text_):
                 # Pronounciation
                 pronounciation += text_ + ' | '
@@ -76,6 +76,9 @@ def LXML_parseHTML(parsed, target, url):
                         if filtered is not None and current_pos is not None \
                            and len(queue) > 0:
                             queue.append((wwc.ID_EXAMPLE, filtered))
+                        else:
+                            queue.append((wwc.ID_POS, current_pos))
+                            queue.append((wwc.ID_DEFINITION, filtered))
             elif tag_ == 'div' and '/a/' not in p_:
                 # Definition
                 filtered = wws.notBad(text_, current_pos, target)
@@ -85,4 +88,4 @@ def LXML_parseHTML(parsed, target, url):
 
     if queue == []:
         return 'none', wwc.ERROR
-    return html.unescape(pronounciation), wws.queueToDict(queue)
+    return pronounciation, wws.queueToDict(queue)
