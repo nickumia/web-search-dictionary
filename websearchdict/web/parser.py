@@ -12,8 +12,12 @@ def LXML_preprocessHTML(web_response):
         hdoc = etree.fromstring(web_response.content)
     else:
         content = web_response.content.decode("iso-8859-1")
-        # Remove '<!doctype html>' header
-        content = content[15:]
+        # Remove '<!doctype html>' header OR!
+        # '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">'
+        if content[0:14] == '<!doctype html>':
+            content = content[15:]
+        else:
+            content = content[63:]
         # Combine into one line
         content = ' '.join(content.split('\n'))
         # Make html safe
