@@ -66,28 +66,14 @@ def test_lookup_very():
     entry = websearchdict.lookup('very')
     definitions = entry.getDefinitions()
     print(definitions)
-    assert {'pos': 'adverb',
-            'definition': 'in a high degree.',
-            'examples': ['"very much so"'],
-            'synonyms': ['extremely', 'exceedingly', 'exceptionally',
-                         'especially', 'tremendously', 'immensely', 'vastly',
-                         'hugely', 'extraordinarily', 'extra', 'excessively',
-                         'overly', 'over', 'abundantly', 'inordinately',
-                         'singularly', 'significantly', 'distinctly',
-                         'outstandingly', 'uncommonly', 'unusually',
-                         'decidedly', 'particularly', 'eminently', 'supremely',
-                         'highly', 'remarkably', 'really', 'truly', 'mightily',
-                         'thoroughly', 'all that', 'to a great extent', 'most',
-                         'so', 'too', 'unco', 'très', 'right', 'terrifically',
-                         'awfully', 'terribly', 'devilishly', 'madly',
-                         'majorly', 'seriously', 'desperately', 'mega',
-                         'ultra', 'oh-so', 'too-too', 'stinking', 'mucho',
-                         'damn', 'damned', 'too &#8230; for words', 'devilish',
-                         'hellish', 'frightfully', 'ever so', 'well', 'bloody',
-                         'dead', 'dirty', 'jolly', 'fair', 'real', 'mighty',
-                         'powerful', 'awful', 'plumb', 'darned', 'way',
-                         'bitching', 'mad', 'lekker', 'exceeding', 'sore']
-            } in definitions.values()
+    assert definitions[0]['pos'] == 'adverb'
+    assert definitions[0]['definition'] == 'in a high degree.'
+    assert definitions[0]['examples'] == ['"very much so"']
+    assert definitions[0]['synonyms'][0] == 'extremely'
+    assert definitions[0]['synonyms'][0] == 'exceedingly'
+    assert definitions[0]['synonyms'][0] == 'exceptionally'
+    assert definitions[0]['synonyms'][0] == 'especially'
+    assert definitions[0]['synonyms'][-1] == 'sore'
     assert {'pos': 'adjective',
             'definition': ('actual; precise (used to emphasize the exact '
                            'identity of a particular person or thing).'),
