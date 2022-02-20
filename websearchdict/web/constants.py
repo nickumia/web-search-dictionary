@@ -68,8 +68,7 @@ BAD_PHRASES = [
 ]
 MARKETING = r'.*?/div/div/div/div\[[0-9]\]/div/span'
 
-# PRONUNCIATION = r'/(&#|[a-z}|[A-Z]|[0-9]|;|,|[^a-zA-Z\d\s])+/'
-PRONUNCIATION = r'/.+?/'
+PRONUNCIATION = r'/(&#|[a-z}|[A-Z]|[0-9]|;|,|[^a-zA-Z\d\s])+/'
 
 ERROR = [{
     'pos': 'Unexpected Error :(',
