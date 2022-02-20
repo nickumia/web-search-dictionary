@@ -71,10 +71,10 @@ def LXML_parseHTML(parsed, target, url):
                 else:
                     # TODO: watch out for this changing
                     if not re.match(wwc.MARKETING, p_):
-                        filtered = html.unescape(
-                            wws.notBad(text_, current_pos, target,
-                                       example=True))
+                        filtered = wws.notBad(text_, current_pos, target,
+                                              example=True)
                         if filtered is not None and current_pos is not None:
+                            filtered = html.unescape(filtered)
                             if len(queue) > 0:
                                 queue.append((wwc.ID_EXAMPLE, filtered))
                             else:
@@ -82,9 +82,9 @@ def LXML_parseHTML(parsed, target, url):
                                 queue.append((wwc.ID_DEFINITION, filtered))
             elif tag_ == 'div' and '/a/' not in p_:
                 # Definition
-                filtered = html.unescape(
-                    wws.notBad(text_, current_pos, target))
+                filtered = wws.notBad(text_, current_pos, target)
                 if filtered is not None and current_pos is not None:
+                    filtered = html.unescape(filtered)
                     queue.append((wwc.ID_POS, current_pos))
                     queue.append((wwc.ID_DEFINITION, filtered))
 
