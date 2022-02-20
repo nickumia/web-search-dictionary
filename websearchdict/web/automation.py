@@ -7,6 +7,8 @@ from selenium import webdriver
 from selenium.webdriver import FirefoxOptions
 from selenium.webdriver.common.action_chains import ActionChains
 
+import websearchdict.web.constants as wwc
+
 random.seed(time.time())
 
 opts = FirefoxOptions()
@@ -41,6 +43,11 @@ def generateRandomHeaders():
     headers['Cookie'] = "NID=511=hsVTD2KECxob86pD0XGuyEZtMiRieAl-Tz76mznXP-0mCKGthVy_Q4oe88Zh66F7syhkmsypnixEtsnJlbEhaEOipIwQiWfiP7GUgVepqREg5Euju5NTHZQXaaClNaaIyUA02TiEdgGCXIoDy0XtsXe24uW-HBVHKSnwQ4ezRHq"  # NOQA
 
     return headers
+
+
+def randomGoogle():
+    choice = random.randrange(0, len(wwc.GOOGLES), 1)
+    return wwc.GOOGLES[choice]
 
 
 def checkForLimited(message):
