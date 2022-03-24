@@ -10,7 +10,7 @@ import websearchdict.web.automation as wwsu
 
 def LXML_preprocessHTML(web_response):
     try:
-        content = web_response.content.decode("iso-8859-1")
+        content = web_response.decode("iso-8859-1")
     except AttributeError:
         content = web_response
     # Remove '<!doctype html>' header OR!

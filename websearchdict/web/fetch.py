@@ -1,5 +1,7 @@
 
 import requests
+from torpy.http.requests import TorRequests
+import urllib3
 
 import websearchdict.web.automation as wwa
 
@@ -20,3 +22,20 @@ def google_search(word):
 
     # print(r.request.headers)
     return r
+
+
+def tor_search(word):
+    url = "https://www.google.com/search"
+    payload = {
+        'q': 'define ' + word,
+    }
+
+    # Courtesy of https://medium.com/geekculture/rotate-ip-address-and-user-agent-to-scrape-data-a010216c8d0c  NOQA
+    with TorRequests() as tor_requests:
+        with tor_requests.get_session() as sess:
+            print(sess.get("http://httpbin.org/ip").json())
+            response = sess.get(url,
+                                params=payload)
+
+    return response.text
+
