@@ -14,7 +14,8 @@ setup(
     author='nickumia',
     install_requires=[
         'lxml',
-        'requests'
+        'requests',
+        'selenium'
     ],
     packages=find_packages(include=[
         'websearchdict',
