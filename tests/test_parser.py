@@ -12,7 +12,7 @@ def test_parser():
             self.content = content
     input_html = TestResponse(open(cfd + '/test.html').read())
 
-    parsed = wwp.LXML_preprocessHTML(input_html)
+    parsed = wwp.LXML_preprocessHTML(input_html.content)
 
     assert parsed.xpath('/html/head/title')[0].tag == 'title'
     assert parsed.xpath('/html/head/title')[0].text == 'NLP'
