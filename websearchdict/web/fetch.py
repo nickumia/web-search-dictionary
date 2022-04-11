@@ -7,7 +7,7 @@ session = requests.session()
 
 
 def google_search(word):
-    url = "https://www.%s/search" % (wwa.randomGoogle())
+    url = "https://www.%s/search?hl=en" % (wwa.randomGoogle())
     # url = "https://www.google.com/search"
     print(url)
     payload = {
