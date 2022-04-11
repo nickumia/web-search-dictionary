@@ -116,7 +116,11 @@ def test_lookup_affair_affairs():
     assert__pos(definitions)
     assert__pos(definitions2)
 
-    assert len(definitions) == len(definitions2)
+    # The following can no longer be guaranteed
+    # assert len(definitions) == len(definitions2)
+
+    assert len(definitions) < len(definitions2)
+    assert len(definitions2) < 20
 
 
 def test_lookup_direct():

@@ -69,6 +69,7 @@ BAD_PHRASES = [
     r'Â.',
 ]
 MARKETING = r'.*?/div/div/div/div\[[0-9]\]/div/span'
+LINK = r'.*?/a(\[[0-9]{1,2}\])?/.*'
 
 PRONUNCIATION = r'/(&#|[a-z}|[A-Z]|[0-9]|;|,|[^a-zA-Z\d\s])+/'
 

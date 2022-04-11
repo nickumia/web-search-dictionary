@@ -77,7 +77,7 @@ def LXML_parseHTML(parsed, target, url, override=False):
                         if filtered is not None and current_pos is not None \
                            and len(queue) > 0:
                             queue.append((wwc.ID_EXAMPLE, filtered))
-            elif tag_ == 'div' and '/a/' not in p_:
+            elif tag_ == 'div' and not re.match(wwc.LINK, p_):
                 # Definition
                 filtered = wws.notBad(text_, current_pos, target)
                 if filtered is not None and current_pos is not None:
