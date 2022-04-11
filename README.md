@@ -56,10 +56,15 @@ Synonyms [2]: ['society', 'high society', 'secular interests', 'temporal concern
 
 ## Special Considerations
 
-- The library makes a new web request to the search engine for every `lookup` call.  It is a non-special, very generic http
+- Search Engine/ISP Rate-limiting:
+  - The library makes a new web request to the search engine for every `lookup` call.  It is a non-special, very generic http
   call.  However, be wary making too many calls within a short time period.  The search engine or ISP or other middleman may
-  begin to rate-limit or otherwise flag the connection.  This is not a known problem (hoewver, I will update if more details
-  surface).
+  begin to rate-limit or otherwise flag the connection.  
+  - This is now a known problem as addressed in https://github.com/nickumia/web-search-dictionary/pull/9.
+  - The current workaround is to use selenium to open up a web browser to manually complete a recaptcha.  By doing so 
+  (within the context of the application), google allows the program to operate on a temporary lease.  When the problem does
+  occur, the recaptcha should only need to be completed once within a 24 hour period (or until google releases the rate-limit
+  on the crawler).
   
 ## Peers
 
