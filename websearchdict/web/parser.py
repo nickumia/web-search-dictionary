@@ -13,16 +13,17 @@ def LXML_preprocessHTML(web_response):
         content = web_response.content.decode("iso-8859-1")
     except AttributeError:
         content = web_response
+    # print(content)
     # Remove '<!doctype html>' header OR!
     # '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">'
-    if content[0:15] == '<!doctype html>':
+    if content[0:15].lower() == '<!doctype html>':
         content = content[15:]
     elif content[0:63] == ('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 '
                            'Transitional//EN">'):
         content = content[63:]
 
     # Combine into one line
-    content = ' '.join(content.split('\n'))
+    content = ' '.join(content.split('\n')).rstrip()
     # Make html safe
     content = content.replace('&', '&amp;')
     content = content.replace('<=', '&lt;=')
@@ -33,12 +34,12 @@ def LXML_preprocessHTML(web_response):
     for unsafe_tag in wwc.BAD_TAGS:
         content = re.sub(unsafe_tag, '', content)
 
-    # print(content)
+    print(content)
     hdoc = etree.fromstring(content)
     return hdoc
 
 
-def LXML_parseHTML(parsed, target, url, override=False):
+def LXML_googleHTML(parsed, target, url, override=False):
     pronounciation = ""
     current_pos = None
     queue = []
@@ -87,3 +88,24 @@ def LXML_parseHTML(parsed, target, url, override=False):
     if queue == []:
         return 'none', wwc.ERROR
     return html.unescape(pronounciation), wws.queueToDict(queue)
+
+
+def LXML_wiktionaryHTML(parsed, url, override=False):
+    pronounciation = ""
+    current_pos = None
+    queue = []
+
+    if wwsu.checkForLimited(parsed):
+        print('Sorry, we\'ve been flagged, trying to complete captcha..')
+        parsed = LXML_preprocessHTML(wwsu.backup(url, override=override))
+
+    parent = etree.ElementTree(parsed)
+    for e in parsed.iter():
+        if e.text is not None:
+            text_ = e.text.strip().strip() \
+                .encode('utf-8').decode('utf-8', 'ignore')
+            tag_ = e.tag.strip()
+            p_ = parent.getpath(e)
+            print("|" + text_ + "|")
+            print("|" + tag_ + "|")
+            print(parent.getpath(e),)

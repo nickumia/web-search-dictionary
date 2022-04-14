@@ -7,9 +7,13 @@ session = requests.session()
 
 
 def google_search(word):
+    '''
+    Lookup the word with the google search engine
+    - Currently, only english words are supported.
+    '''
     url = "https://www.%s/search?hl=en" % (wwa.randomGoogle())
     # url = "https://www.google.com/search"
-    print(url)
+    print("Query url: %s" % (url))
     payload = {
         'q': 'define ' + word,
     }
@@ -19,4 +23,16 @@ def google_search(word):
                     headers=wwa.generateRandomHeaders())
 
     # print(r.request.headers)
+    return r
+
+
+def wiktionary_search(word):
+    '''
+    Lookup the word using wiktionary's search engine
+    '''
+    url = "https://en.wiktionary.org/wiki/%s" % (word)
+
+    session.cookies.clear()
+    r = session.get(url,
+                    headers=wwa.generateRandomHeaders())
     return r
