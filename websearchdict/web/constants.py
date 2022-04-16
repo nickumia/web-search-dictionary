@@ -20,15 +20,15 @@ POS_TAGS = [
 BAD_TAGS = [
     r'<style>.*?</style>',
     r'<head>.*?</head>',
-    r'<img .*?">',
-    r'<link .*?">',
+    r'<img .*?" ?/?>',
+    r'<link .*?"/?>',
     r'<source .*?" ?/?>',
-    r'<input .*?">',
+    r'<input .*?" ?/?>',
     r'<br ?/?>',
     r'<script.*?</script>',
     r'<!--.*?-->',
-    r'<meta .*?">',
-    r'<hr ?.*?">'
+    r'<meta .*?"/?>',
+    r'<hr ?.*?"?/?>'
 ]
 
 MISC = ['G', 'o', 'g', 'l', 'e', 'Videos', 'Please click', 'here', 'All',

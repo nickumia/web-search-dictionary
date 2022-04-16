@@ -10,20 +10,22 @@ import websearchdict.web.automation as wwsu
 
 def LXML_preprocessHTML(web_response):
     try:
+        # UTF8 is preferred for wiktionary
+        # iso-8859-1 is preferred for google
         content = web_response.content.decode("iso-8859-1")
     except AttributeError:
         content = web_response
-    # print(content)
+
     # Remove '<!doctype html>' header OR!
     # '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">'
     if content[0:15].lower() == '<!doctype html>':
         content = content[15:]
-    elif content[0:63] == ('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 '
-                           'Transitional//EN">'):
+    elif content[0:63].lower() == ('<!doctype html public "-//w3c//dtd html '
+                                   '4.01 transitional//en">'):
         content = content[63:]
 
     # Combine into one line
-    content = ' '.join(content.split('\n')).rstrip()
+    content = ' '.join(content.splitlines())
     # Make html safe
     content = content.replace('&', '&amp;')
     content = content.replace('<=', '&lt;=')
@@ -34,7 +36,7 @@ def LXML_preprocessHTML(web_response):
     for unsafe_tag in wwc.BAD_TAGS:
         content = re.sub(unsafe_tag, '', content)
 
-    print(content)
+    # print(content)
     hdoc = etree.fromstring(content)
     return hdoc
 
