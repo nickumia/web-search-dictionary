@@ -41,8 +41,7 @@ def test_lookup_a():
                            'the first time in a text or conversation.'),
             'examples': ['"a man came out of the room"'],
             'synonyms': None} in definitions.values()
-    # This is weird, I get 3 locally and GA gets 10 remotely :/
-    assert 6 <= len(definitions) <= 10
+    assert 9 <= len(definitions) <= 11
     assert__pos(definitions)
 
 
@@ -117,9 +116,10 @@ def test_lookup_affair_affairs():
     assert__pos(definitions2)
 
     # The following can no longer be guaranteed
-    # assert len(definitions) == len(definitions2)
+    assert len(definitions) == len(definitions2)
 
-    assert len(definitions) < len(definitions2)
+    # This is apparently true sometimes..
+    # assert len(definitions) < len(definitions2)
     assert len(definitions2) < 20
 
 

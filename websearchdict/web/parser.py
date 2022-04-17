@@ -10,19 +10,22 @@ import websearchdict.web.automation as wwsu
 
 def LXML_preprocessHTML(web_response):
     try:
+        # UTF8 is preferred for wiktionary
+        # iso-8859-1 is preferred for google
         content = web_response.content.decode("iso-8859-1")
     except AttributeError:
         content = web_response
+
     # Remove '<!doctype html>' header OR!
     # '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">'
-    if content[0:15] == '<!doctype html>':
+    if content[0:15].lower() == '<!doctype html>':
         content = content[15:]
-    elif content[0:63] == ('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 '
-                           'Transitional//EN">'):
+    elif content[0:63].lower() == ('<!doctype html public "-//w3c//dtd html '
+                                   '4.01 transitional//en">'):
         content = content[63:]
 
     # Combine into one line
-    content = ' '.join(content.split('\n'))
+    content = ' '.join(content.splitlines())
     # Make html safe
     content = content.replace('&', '&amp;')
     content = content.replace('<=', '&lt;=')
@@ -38,7 +41,7 @@ def LXML_preprocessHTML(web_response):
     return hdoc
 
 
-def LXML_parseHTML(parsed, target, url, override=False):
+def LXML_googleHTML(parsed, target, url, override=False):
     pronounciation = ""
     current_pos = None
     queue = []
@@ -87,3 +90,86 @@ def LXML_parseHTML(parsed, target, url, override=False):
     if queue == []:
         return 'none', wwc.ERROR
     return html.unescape(pronounciation), wws.queueToDict(queue)
+
+
+def LXML_wiktionaryHTML(parsed, url, override=False):
+    pronounciation = ""
+    current_pos = None
+    queue = []
+
+    if wwsu.checkForLimited(parsed):
+        print('Sorry, we\'ve been flagged, trying to complete captcha..')
+        parsed = LXML_preprocessHTML(wwsu.backup(url, override=override))
+
+    parent = etree.ElementTree(parsed)
+    for e in parsed.iter():
+        if e.tag.strip() == 'span':
+            if re.match(r'h3\[[0-9]+\]', parent.getpath(e).split('/')[-2]):
+                # POS
+                if e.text is not None:
+                    text_ = e.text.strip().strip() \
+                        .encode('utf-8').decode('utf-8', 'ignore')
+                    if wws.acceptablePOS(text_):
+                        current_pos = text_
+        if e.tag.strip() == 'span':
+            if e.get('class') == 'IPA':
+                # Pronounciation
+                if e.text is not None:
+                    text_ = e.text.strip().encode('utf8')
+                    text_ = text_.replace(b'\x9c', b'')
+                    text_ = text_.replace(b'\x90', b'')
+                    text_ = text_.replace(b'\x9d', b'')
+                    text_ = text_.replace(b'\x9b', b'')
+                    # text_ = re.sub(r'\\x[a-f0-9]{2}', '', text_)
+                    pronounciation += text_.decode('utf-8', 'ignore') + ' | '
+        elif e.tag.strip() == 'ol':
+            # List of definitions for preceding POS
+            definitions = LXML_definition_ol(e)
+            for define in definitions:
+                queue.append((wwc.ID_POS, current_pos))
+                queue.append((wwc.ID_DEFINITION, define))
+
+    return pronounciation, wws.queueToDict(queue, one_more=True)
+
+
+def LXML_definition_ol(e):
+    '''
+    Parse a block of definitions per a particular POS
+    Basic structure: an ordered list with the top-level information
+        being the definition.  There are sub-tags and sub-bullets
+        that hold more information, such as history, examples and
+        synonyms
+    IN: XML Tree (starting with 'ol' tag)
+    OUT: List of definitions
+    '''
+    tex = []
+    number = None
+    definition = ' '
+    parent = etree.ElementTree(e)
+    for f in e.iter():
+        root = parent.getpath(f).split('/')[-2] == 'ol'
+        item = parent.getpath(f).split('/')[-1].split('[')[0] == 'li'
+        try:
+            numb = parent.getpath(f).split('[')[1].split(']')[0]
+        except IndexError:
+            numb = '-1'
+        if all([root, item]):
+            if numb != number:
+                number = numb
+                if definition.strip() != '':
+                    tex.append((definition.strip()))
+                definition = ' '
+
+        # TODO: extract examples, synonyms, etc
+        if 'dl' in parent.getpath(f):
+            continue
+        if 'ul' in parent.getpath(f):
+            continue
+
+        if isinstance(f.text, str):
+            definition += f.text + ' '
+        if isinstance(f.tail, str):
+            definition += f.tail + ' '
+
+    tex.append((definition))
+    return tex

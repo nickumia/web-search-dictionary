@@ -1,7 +1,10 @@
 
 import websearchdict
+from websearchdict.web.fetch import google_search, wiktionary_search
 import sys
 
+SEARCH = 'wiktionary'
+# SEARCH = 'google'
 
 if __name__ == '__main__':
     # Get the definitions for input word
@@ -11,7 +14,11 @@ if __name__ == '__main__':
         print("Please supply a word to lookup "
               "(e.g. 'python example.py world')")
         sys.exit()
-    entry = websearchdict.lookup(sys.argv[1])
+
+    if SEARCH == 'google':
+        entry = websearchdict.lookup(sys.argv[1], search=google_search)
+    elif SEARCH == 'wiktionary':
+        entry = websearchdict.lookup(sys.argv[1], search=wiktionary_search)
 
     # Get the pronounciation for the word
     print(entry.getPronounciation())
