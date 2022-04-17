@@ -119,7 +119,7 @@ def LXML_wiktionaryHTML(parsed, url, override=False):
                 queue.append((wwc.ID_POS, current_pos))
                 queue.append((wwc.ID_DEFINITION, define))
 
-    return html.unescape(pronounciation), wws.queueToDict(queue)
+    return html.unescape(pronounciation), wws.queueToDict(queue, one_more=True)
 
 
 def LXML_definition_ol(e):

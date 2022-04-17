@@ -4,7 +4,7 @@ import re
 import websearchdict.web.constants as wwc
 
 
-def queueToDict(queue):
+def queueToDict(queue, one_more=False):
     '''
     All items are tagged with what type of data it is,
     - POS
@@ -45,12 +45,13 @@ def queueToDict(queue):
             pos = None
             exa = []
             syn = None
-    definitions.append({
-        'pos': pos,
-        'definition': fed,
-        'examples': exa,
-        'synonyms': syn
-    })
+    if one_more:
+        definitions.append({
+            'pos': pos,
+            'definition': fed,
+            'examples': exa,
+            'synonyms': syn
+        })
     return definitions
 
 
