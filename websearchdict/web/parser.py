@@ -110,8 +110,18 @@ def LXML_wiktionaryHTML(parsed, url, override=False):
                     text_ = e.text.strip().strip() \
                         .encode('utf-8').decode('utf-8', 'ignore')
                     if wws.acceptablePOS(text_):
-                        # POS
                         current_pos = text_
+        if e.tag.strip() == 'span':
+            if e.get('class') == 'IPA':
+                # Pronounciation
+                if e.text is not None:
+                    text_ = e.text.strip().encode('utf8')
+                    text_ = text_.replace(b'\x9c', b'')
+                    text_ = text_.replace(b'\x90', b'')
+                    text_ = text_.replace(b'\x9d', b'')
+                    text_ = text_.replace(b'\x9b', b'')
+                    # text_ = re.sub(r'\\x[a-f0-9]{2}', '', text_)
+                    pronounciation += text_.decode('utf-8', 'ignore') + ' | '
         elif e.tag.strip() == 'ol':
             # List of definitions for preceding POS
             definitions = LXML_definition_ol(e)
@@ -119,7 +129,7 @@ def LXML_wiktionaryHTML(parsed, url, override=False):
                 queue.append((wwc.ID_POS, current_pos))
                 queue.append((wwc.ID_DEFINITION, define))
 
-    return html.unescape(pronounciation), wws.queueToDict(queue, one_more=True)
+    return pronounciation, wws.queueToDict(queue, one_more=True)
 
 
 def LXML_definition_ol(e):

@@ -7,6 +7,18 @@ from websearchdict.web.fetch import wiktionary_search
 # Provide acceptable order of the number of definitions
 # Should be more exact with wiktionary
 
+def test_lookup():
+    definitions = websearchdict.lookup('world', search=wiktionary_search)
+    # print(definitions.getDefinitions())
+    assert definitions.getPronounciation() == \
+            ('/wÉËld/ | /wÉld/ | /wÉµËld/ | [wÉµËÉ¯Ì¯dÌ¥] | '
+             '-ÉË(É¹)ld | /wurld/ | /wÉrld/ | ')
+
+    assert len(definitions.getDefinitions()) == 24
+    assert__pos(definitions.getDefinitions())
+
+
+
 def test_example():
     # Get the definitions for 'special'
     entry = websearchdict.lookup('special', search=wiktionary_search)
@@ -26,13 +38,6 @@ def test_lookup_a():
     print(definitions)
     # This is a bit of a problem..
     assert len(definitions) == 445
-    assert__pos(definitions)
-
-
-def test_lookup_world():
-    entry = websearchdict.lookup('world', search=wiktionary_search)
-    definitions = entry.getDefinitions()
-    assert len(definitions) == 24
     assert__pos(definitions)
 
 
