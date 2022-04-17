@@ -103,11 +103,63 @@ def LXML_wiktionaryHTML(parsed, url, override=False):
 
     parent = etree.ElementTree(parsed)
     for e in parsed.iter():
-        if e.text is not None:
-            text_ = e.text.strip().strip() \
-                .encode('utf-8').decode('utf-8', 'ignore')
-            tag_ = e.tag.strip()
-            p_ = parent.getpath(e)
-            print("|" + text_ + "|")
-            print("|" + tag_ + "|")
-            print(parent.getpath(e),)
+        if e.tag.strip() == 'span':
+            if re.match(r'h3\[[0-9]+\]', parent.getpath(e).split('/')[-2]):
+                # POS
+                if e.text is not None:
+                    text_ = e.text.strip().strip() \
+                        .encode('utf-8').decode('utf-8', 'ignore')
+                    if wws.acceptablePOS(text_):
+                        # POS
+                        current_pos = text_
+        elif e.tag.strip() == 'ol':
+            # List of definitions for preceding POS
+            definitions = LXML_definition_ol(e)
+            for define in definitions:
+                queue.append((wwc.ID_POS, current_pos))
+                queue.append((wwc.ID_DEFINITION, define))
+
+    return html.unescape(pronounciation), wws.queueToDict(queue)
+
+
+def LXML_definition_ol(e):
+    '''
+    Parse a block of definitions per a particular POS
+    Basic structure: an ordered list with the top-level information
+        being the definition.  There are sub-tags and sub-bullets
+        that hold more information, such as history, examples and
+        synonyms
+    IN: XML Tree (starting with 'ol' tag)
+    OUT: List of definitions
+    '''
+    tex = []
+    number = None
+    definition = ' '
+    parent = etree.ElementTree(e)
+    for f in e.iter():
+        root = parent.getpath(f).split('/')[-2] == 'ol'
+        item = parent.getpath(f).split('/')[-1].split('[')[0] == 'li'
+        try:
+            numb = parent.getpath(f).split('[')[1].split(']')[0]
+        except IndexError:
+            numb = '-1'
+        if all([root, item]):
+            if numb != number:
+                number = numb
+                if definition.strip() != '':
+                    tex.append((definition.strip()))
+                definition = ' '
+
+        # TODO: extract examples, synonyms, etc
+        if 'dl' in parent.getpath(f):
+            continue
+        if 'ul' in parent.getpath(f):
+            continue
+
+        if isinstance(f.text, str):
+            definition += f.text + ' '
+        if isinstance(f.tail, str):
+            definition += f.tail + ' '
+
+    tex.append((definition))
+    return tex

@@ -19,7 +19,7 @@ def lookup(word, search=google_search, parser='lxml', override=False):
             pronounciation, definitions = LXML_wiktionaryHTML(parsed,
                                                               web_response.url,
                                                               override=override
-                                                             )
+                                                              )
 
     A.addPronounciation(pronounciation)
     for define in definitions:

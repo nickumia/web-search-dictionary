@@ -45,6 +45,12 @@ def queueToDict(queue):
             pos = None
             exa = []
             syn = None
+    definitions.append({
+        'pos': pos,
+        'definition': fed,
+        'examples': exa,
+        'synonyms': syn
+    })
     return definitions
 
 
