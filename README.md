@@ -39,7 +39,7 @@ under-the-hood mechanisms that may be expanded upon in the future.
    that may provide a different understanding of web results.  Currently, lxml is the only supported parser.
 
 ```
-# Example Output 1 (Google):
+# Example Output 1 (Google): special
 
 Part of speech [0]: adjective
 Definition [0]: better, greater, or otherwise different from what is usual.
@@ -48,7 +48,7 @@ Part of speech [1]: noun
 Definition [1]: a thing, such as an event, product, or broadcast, that is designed or organized for a particular occasion or purpose.
 Example [1]: television's election night specials
 
-# Example Output 2 (Google):
+# Example Output 2 (Google): world
 
 /wərld/ |
 Part of speech [0]: noun
@@ -64,7 +64,7 @@ Definition [2]: human and social interaction.
 Example [2]: he has almost completely withdrawn from the world
 Synonyms [2]: ['society', 'high society', 'secular interests', 'temporal concerns', 'earthly concerns', 'human existence']
 
-# Example Output 3 (Wiktionary):
+# Example Output 3 (Wiktionary): travel
 
 /ËtÉ¹Ã¦vÉl/ | -Ã¦vÉl | /ËtrÃ¦ËÊÉÉ½/ |
 Part of speech [0]: Verb
