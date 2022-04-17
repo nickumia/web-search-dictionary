@@ -1,6 +1,7 @@
 
 import websearchdict
 import websearchdict.web.structure as wws
+from websearchdict.web.fetch import wiktionary_search
 
 
 # Provide acceptable order of the number of definitions
@@ -8,7 +9,7 @@ import websearchdict.web.structure as wws
 
 def test_example():
     # Get the definitions for 'special'
-    entry = websearchdict.lookup('special')
+    entry = websearchdict.lookup('special', search=wiktionary_search)
 
     # Get the pronounciation for 'special'
     print(entry.getPronounciation())
@@ -20,7 +21,7 @@ def test_example():
 
 
 def test_lookup_a():
-    entry = websearchdict.lookup('a')
+    entry = websearchdict.lookup('a', search=wiktionary_search)
     definitions = entry.getDefinitions()
     print(definitions)
     # This is a bit of a problem..
@@ -29,7 +30,7 @@ def test_lookup_a():
 
 
 def test_lookup_world():
-    entry = websearchdict.lookup('world')
+    entry = websearchdict.lookup('world', search=wiktionary_search)
     definitions = entry.getDefinitions()
     assert len(definitions) == 24
     assert__pos(definitions)
