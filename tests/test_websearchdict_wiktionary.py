@@ -11,12 +11,11 @@ def test_lookup():
     definitions = websearchdict.lookup('world', search=wiktionary_search)
     # print(definitions.getDefinitions())
     assert definitions.getPronounciation() == \
-            ('/wÉËld/ | /wÉld/ | /wÉµËld/ | [wÉµËÉ¯Ì¯dÌ¥] | '
-             '-ÉË(É¹)ld | /wurld/ | /wÉrld/ | ')
+        ('/wÉËld/ | /wÉld/ | /wÉµËld/ | [wÉµËÉ¯Ì¯dÌ¥] | '
+         '-ÉË(É¹)ld | /wurld/ | /wÉrld/ | ')
 
     assert len(definitions.getDefinitions()) == 24
     assert__pos(definitions.getDefinitions())
-
 
 
 def test_example():
