@@ -19,7 +19,6 @@ POS_TAGS = [
 
 BAD_TAGS = [
     r'<style>.*?</style>',
-    r'<head>.*?</head>',
     r'<img .*?" ?/?>',
     r'<link .*?"/?>',
     r'<source .*?" ?/?>',
