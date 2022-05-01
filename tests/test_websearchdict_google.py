@@ -41,7 +41,7 @@ def test_lookup_a():
                            'the first time in a text or conversation.'),
             'examples': ['"a man came out of the room"'],
             'synonyms': None} in definitions.values()
-    assert 9 <= len(definitions) <= 11
+    assert 8 <= len(definitions) <= 11
     assert__pos(definitions)
 
 

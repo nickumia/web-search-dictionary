@@ -28,13 +28,13 @@ websearchdict.lookup("<word-to-lookup>", search=<wiktionary_search|google_search
 The main function of this package is `lookup()` which returns the definitions of words.  There are two
 under-the-hood mechanisms that may be expanded upon in the future.
 1. Lookup Engine: 
-  1. Google: Currently, since Google has it's `define [word]` capability built into search bar, it
-     was the most logical option to retrieve definitions.  There is an unintended feature that uses the website
-     previews from real search results (which enables more definitions to be returned).  Further integrations
-     with other search engines can be written in the future.
-  1. Wiktionary: Inspired from online searching, wiktionary provides an open online dictionary with a relatively
-     easy lookup url.  The parsing methodology is completely different from google; however, this seems like it
-     would be the more stable option instead of relying on an intricate search engine.
+    1. Google: Currently, since Google has it's `define [word]` capability built into search bar, it
+       was the most logical option to retrieve definitions.  There is an unintended feature that uses the website
+       previews from real search results (which enables more definitions to be returned).  Further integrations
+       with other search engines can be written in the future.
+    1. Wiktionary: Inspired from online searching, wiktionary provides an open online dictionary with a relatively
+       easy lookup url.  The parsing methodology is completely different from google; however, this seems like it
+       would be the more stable option instead of relying on an intricate search engine.
 1. HTML Parser:  For the quickest processing, `lxml` is used as the default HTML Parser.  There are other parsers
    that may provide a different understanding of web results.  Currently, lxml is the only supported parser.
 
