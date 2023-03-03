@@ -12,7 +12,6 @@ def google_search(word):
     - Currently, only english words are supported.
     '''
     url = "https://www.%s/search?hl=en" % (wwa.randomGoogle())
-    # url = "https://www.google.com/search"
     print("Query url: %s" % (url))
     payload = {
         'q': 'define ' + word,
@@ -22,8 +21,14 @@ def google_search(word):
                     params=payload,
                     headers=wwa.generateRandomHeaders())
 
-    # print(r.request.headers)
-    return r
+    if r.status_code == 200:
+        return r
+    elif r.status_code == 429:
+        print('The request was rate-limited :(')
+        return error("<!doctype html> <error></error>")
+    else:
+        print('Code %d: %s' % (r.status_code, r.text))
+        return error("<!doctype html> <error></error>")
 
 
 def wiktionary_search(word):
@@ -35,4 +40,19 @@ def wiktionary_search(word):
     session.cookies.clear()
     r = session.get(url,
                     headers=wwa.generateRandomHeaders())
-    return r
+
+    if r.status_code == 200:
+        return r
+    elif r.status_code == 429:
+        print('The request was rate-limited :(')
+        return error("<!doctype html> <error></error>")
+    else:
+        print('Code %d: %s' % (r.status_code, r.text))
+        return error("<!doctype html> <error></error>")
+
+
+class error(str):
+    def __init__(self, text):
+        super().__init__()
+        self.text = text
+        self.url = "kamutiv.com"

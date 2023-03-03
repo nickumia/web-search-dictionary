@@ -3,8 +3,8 @@ import websearchdict
 from websearchdict.web.fetch import google_search, wiktionary_search
 import sys
 
-SEARCH = 'wiktionary'
-# SEARCH = 'google'
+# SEARCH = 'wiktionary'
+SEARCH = 'google'
 
 if __name__ == '__main__':
     # Get the definitions for input word
