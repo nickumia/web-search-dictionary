@@ -23,14 +23,7 @@ def google_search(word):
                     params=payload,
                     headers=wwa.generateRandomHeaders())
 
-    if r.status_code == 200:
-        return r
-    elif r.status_code == 429:
-        logger.warning('The request was rate-limited :(')
-        return error("<!doctype html> <error></error>")
-    else:
-        logging.warning('Code %d: %s', r.status_code, r.text)
-        return error("<!doctype html> <error></error>")
+    return assess_status_code(r)
 
 
 def wiktionary_search(word):
@@ -43,6 +36,10 @@ def wiktionary_search(word):
     r = session.get(url,
                     headers=wwa.generateRandomHeaders())
 
+    return assess_status_code(r)
+
+
+def assess_status_code(r):
     if r.status_code == 200:
         return r
     elif r.status_code == 429:
