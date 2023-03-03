@@ -52,7 +52,7 @@ def LXML_googleHTML(parsed, target, url, override=False):
     queue = []
 
     if wwsu.checkForLimited(parsed):
-        logging.warning('Sorry, we\'ve been flagged, trying to complete captcha..')
+        logging.warning('We\'ve been flagged! :( trying to complete captcha..')
         parsed = LXML_preprocessHTML(wwsu.backup(url, override=override))
 
     parent = etree.ElementTree(parsed)
@@ -103,7 +103,7 @@ def LXML_wiktionaryHTML(parsed, url, override=False):
     queue = []
 
     if wwsu.checkForLimited(parsed):
-        logging.warning('Sorry, we\'ve been flagged, trying to complete captcha..')
+        logging.warning('We\'ve been flagged! :( trying to complete captcha..')
         parsed = LXML_preprocessHTML(wwsu.backup(url, override=override))
 
     parent = etree.ElementTree(parsed)
