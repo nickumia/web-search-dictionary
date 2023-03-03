@@ -10,7 +10,7 @@ def test_selenium_works():
     browser = webdriver.Firefox(options=opts)
     browser.get("http://www.python.org")
     assert "Python" in browser.title
-    elem = browser.find_element_by_name("q")
+    elem = browser.find_element("name", "q")
     elem.clear()
     elem.send_keys("pycon")
     elem.send_keys(Keys.RETURN)
