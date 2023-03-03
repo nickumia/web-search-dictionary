@@ -48,7 +48,7 @@ def test_lookup_a():
 
 
 def test_lookup_define():
-    entry = websearchdict.lookup('define')
+    entry = websearchdict.lookup('define', search=google_search)
     definitions = entry.getDefinitions()
     print(definitions)
     assert {'pos': 'verb',
