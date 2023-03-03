@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 logger.debug('Module loaded')
 
 
-def lookup(word, search=google_search, parser='lxml', override=False):
+def lookup(word, search=wiktionary_search, parser='lxml', override=False):
     A = Word(word)
     web_response = search(word)
 
