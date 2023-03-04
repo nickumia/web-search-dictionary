@@ -1,7 +1,11 @@
 
+import logging
 import re
 
 import websearchdict.web.constants as wwc
+
+
+logger = logging.getLogger(__name__)
 
 
 def queueToDict(queue, one_more=False):
@@ -82,7 +86,8 @@ def notBad(possible_definition, pos, word, example=False):
 
     for rule in rules:
         results.append(rule(possible_definition))
-    # print(results)
+    logger.debug('notBad Definitions')
+    logger.debug(results)
 
     ''' Postprocessing to weed out null results '''
 

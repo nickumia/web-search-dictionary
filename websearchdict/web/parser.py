@@ -1,5 +1,6 @@
 
 import html
+import logging
 from lxml import etree
 import re
 
@@ -8,7 +9,11 @@ import websearchdict.web.structure as wws
 import websearchdict.web.automation as wwsu
 
 
+logger = logging.getLogger(__name__)
+
+
 def LXML_preprocessHTML(web_response):
+    logging.debug('Content from LXML_preprocessHTML')
     try:
         # UTF8 is preferred for wiktionary
         # iso-8859-1 is preferred for google
@@ -36,7 +41,7 @@ def LXML_preprocessHTML(web_response):
     for unsafe_tag in wwc.BAD_TAGS:
         content = re.sub(unsafe_tag, '', content)
 
-    # print(content)
+    logging.debug(content)
     hdoc = etree.fromstring(content)
     return hdoc
 
@@ -47,7 +52,7 @@ def LXML_googleHTML(parsed, target, url, override=False):
     queue = []
 
     if wwsu.checkForLimited(parsed):
-        print('Sorry, we\'ve been flagged, trying to complete captcha..')
+        logging.warning('We\'ve been flagged! :( trying to complete captcha..')
         parsed = LXML_preprocessHTML(wwsu.backup(url, override=override))
 
     parent = etree.ElementTree(parsed)
@@ -57,9 +62,9 @@ def LXML_googleHTML(parsed, target, url, override=False):
                 .encode('utf-8').decode('utf-8', 'ignore')
             tag_ = e.tag.strip()
             p_ = parent.getpath(e)
-            # print("|" + text_ + "|")
-            # print("|" + tag_ + "|")
-            # print(parent.getpath(e),)
+            logging.debug("| %s |", text_)
+            logging.debug("| %s |", tag_)
+            logging.debug(parent.getpath(e))
             if re.match(wwc.PRONUNCIATION, text_):
                 # Pronounciation
                 pronounciation += text_ + ' | '
@@ -98,7 +103,7 @@ def LXML_wiktionaryHTML(parsed, url, override=False):
     queue = []
 
     if wwsu.checkForLimited(parsed):
-        print('Sorry, we\'ve been flagged, trying to complete captcha..')
+        logging.warning('We\'ve been flagged! :( trying to complete captcha..')
         parsed = LXML_preprocessHTML(wwsu.backup(url, override=override))
 
     parent = etree.ElementTree(parsed)

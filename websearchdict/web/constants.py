@@ -25,6 +25,7 @@ BAD_TAGS = [
     r'<input .*?" ?/?>',
     r'<br ?/?>',
     r'<script.*?</script>',
+    r'<nav.*?</nav>',
     r'<!--.*?-->',
     r'<meta .*?"/?>',
     r'<hr ?.*?"?/?>'

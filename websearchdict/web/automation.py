@@ -1,4 +1,5 @@
 
+import logging
 import random
 import string
 import time
@@ -10,6 +11,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import websearchdict.web.constants as wwc
 
 random.seed(time.time())
+logger = logging.getLogger(__name__)
 
 
 def generateRandomHeaders():
@@ -59,7 +61,7 @@ def checkForLimited(message):
 
 
 def backup(url, override=False):
-    # print(url)
+    logger.debug(url)
     opts = FirefoxOptions()
 
     if override:
@@ -67,7 +69,7 @@ def backup(url, override=False):
         browser.get(url)
         ok = input('Press enter when you are done with the captcha (Be sure '
                    'to leave the brower open)')
-        print('Thank you for helping me! %s' % ok)
+        logging.warning('Thank you for helping me! %s', ok)
     else:
         opts.add_argument("--headless")
         browser = webdriver.Firefox(options=opts)

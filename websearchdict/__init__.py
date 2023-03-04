@@ -4,8 +4,17 @@ from websearchdict.web.fetch import google_search, wiktionary_search
 from websearchdict.web.parser import \
     LXML_preprocessHTML, LXML_googleHTML, LXML_wiktionaryHTML
 
+import logging
 
-def lookup(word, search=google_search, parser='lxml', override=False):
+logging.basicConfig(
+    format='%(asctime)s %(message)s',
+    datefmt='%m/%d/%Y %I:%M:%S %p'
+)
+logger = logging.getLogger(__name__)
+logger.debug('Module loaded')
+
+
+def lookup(word, search=wiktionary_search, parser='lxml', override=False):
     A = Word(word)
     web_response = search(word)
 

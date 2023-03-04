@@ -1,5 +1,9 @@
 
+import logging
 import websearchdict
+
+
+logging.getLogger("websearchdict").setLevel(logging.DEBUG)
 
 entry = websearchdict.lookup('look', override=True)
 # Get the pronounciation for the word

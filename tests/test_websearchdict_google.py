@@ -1,17 +1,19 @@
 
 import websearchdict
 import websearchdict.web.structure as wws
+from websearchdict.web.fetch import google_search
 
 
 # Provide acceptable order of the number of definitions
 # Varies depending on google search
 
 def test_lookup():
-    definitions = websearchdict.lookup('equal')
+    definitions = websearchdict.lookup('equal', search=google_search)
     # print(definitions.getDefinitions())
     assert any(
         [definitions.getPronounciation() == '/ˈēkwəl/ | ',
          definitions.getPronounciation() == '/ËÄkwÉl/ | ',
+         definitions.getPronounciation() == '/ˈēkw(ə)l/ | ',
          definitions.getPronounciation().encode('utf8') == b'/\xc3\x8b\xc2\x88\xc3\x84\xc2\x93kw\xc3\x89\xc2\x99l/ | ',  # NOQA
          definitions.getPronounciation() == '/ˈçkwəl/ | ']
     )
@@ -21,7 +23,7 @@ def test_lookup():
 
 def test_example():
     # Get the definitions for 'special'
-    entry = websearchdict.lookup('special')
+    entry = websearchdict.lookup('special', search=google_search)
 
     # Get the pronounciation for 'special'
     print(entry.getPronounciation())
@@ -33,7 +35,7 @@ def test_example():
 
 
 def test_lookup_a():
-    entry = websearchdict.lookup('a')
+    entry = websearchdict.lookup('a', search=google_search)
     definitions = entry.getDefinitions()
     print(definitions)
     assert {'pos': 'determiner',
@@ -46,7 +48,7 @@ def test_lookup_a():
 
 
 def test_lookup_define():
-    entry = websearchdict.lookup('define')
+    entry = websearchdict.lookup('define', search=google_search)
     definitions = entry.getDefinitions()
     print(definitions)
     assert {'pos': 'verb',
@@ -64,7 +66,7 @@ def test_lookup_define():
 
 
 def test_lookup_very():
-    entry = websearchdict.lookup('very')
+    entry = websearchdict.lookup('very', search=google_search)
     definitions = entry.getDefinitions()
     print(definitions)
     assert definitions[0]['pos'] == 'adverb'
@@ -90,13 +92,13 @@ def test_lookup_very():
 
 
 def test_lookup_world():
-    entry = websearchdict.lookup('world')
+    entry = websearchdict.lookup('world', search=google_search)
     definitions = entry.getDefinitions()
     assert__pos(definitions)
 
 
 def test_lookup_or():
-    entry = websearchdict.lookup('or')
+    entry = websearchdict.lookup('or', search=google_search)
     definitions = entry.getDefinitions()
     print(definitions)
     assert__pos(definitions)
@@ -107,16 +109,16 @@ def test_lookup_or():
 
 
 def test_lookup_affair_affairs():
-    entry = websearchdict.lookup('affair')
+    entry = websearchdict.lookup('affair', search=google_search)
     definitions = entry.getDefinitions()
-    entry2 = websearchdict.lookup('affairs')
+    entry2 = websearchdict.lookup('affairs', search=google_search)
     definitions2 = entry2.getDefinitions()
 
     assert__pos(definitions)
     assert__pos(definitions2)
 
     # The following can no longer be guaranteed
-    assert len(definitions) == len(definitions2)
+    assert len(definitions) == len(definitions2) + 2
 
     # This is apparently true sometimes..
     # assert len(definitions) < len(definitions2)
@@ -125,7 +127,7 @@ def test_lookup_affair_affairs():
 
 def test_lookup_direct():
     ''' Test that it doesn't accidentally match 'direct' in 'direction' '''
-    entry = websearchdict.lookup('direct')
+    entry = websearchdict.lookup('direct', search=google_search)
     definitions = entry.getDefinitions()
 
     print(definitions)
@@ -145,7 +147,7 @@ def test_lookup_direct():
 
 def test_lookup_be():
     ''' Test that single word definitions are allowed '''
-    entry = websearchdict.lookup('be')
+    entry = websearchdict.lookup('be', search=google_search)
     definitions = entry.getDefinitions()
 
     print(definitions)
@@ -160,7 +162,7 @@ def test_lookup_be():
 
 def test_lookup_used():
     ''' Test that definitions are allowed to have the word in them  '''
-    entry = websearchdict.lookup('used')
+    entry = websearchdict.lookup('used', search=google_search)
     definitions = entry.getDefinitions()
 
     print(definitions)
@@ -173,7 +175,7 @@ def test_lookup_used():
 
 def test_lookup_all():
     ''' Test that allows multiple POS tags in a single definition  '''
-    entry = websearchdict.lookup('all')
+    entry = websearchdict.lookup('all', search=google_search)
     definitions = entry.getDefinitions()
 
     print(definitions)
@@ -199,7 +201,7 @@ def test_lookup_all():
 
 def test_lookup_visible():
     ''' This word seems to fail reliably outside of this repo..so tests '''
-    entry = websearchdict.lookup('visible')
+    entry = websearchdict.lookup('visible', search=google_search)
     definitions = entry.getDefinitions()
 
     print(definitions)

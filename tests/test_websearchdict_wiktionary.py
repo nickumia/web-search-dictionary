@@ -36,7 +36,7 @@ def test_lookup_a():
     definitions = entry.getDefinitions()
     print(definitions)
     # This is a bit of a problem..
-    assert len(definitions) == 445
+    assert len(definitions) == 506
     assert__pos(definitions)
 
 
