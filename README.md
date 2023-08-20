@@ -1,4 +1,5 @@
 [![Tests](https://github.com/nickumia/web-search-dictionary/actions/workflows/commit.yml/badge.svg)](https://github.com/nickumia/web-search-dictionary/actions/workflows/commit.yml)
+[![PyPI version](https://badge.fury.io/py/websearchdict.svg)](https://badge.fury.io/py/websearchdict)
 
 # web-search-dictionary
 A Definition Lookup API based on Google Search Results
