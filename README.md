@@ -10,9 +10,8 @@ for a good Dictionary API, hopefully this can help! 😄
 
 ## Installation
 
-Currently, the project is not published on PyPI (maybe in the near future).  To install, run the following
 ```
-pip install git+https://github.com/nickumia/web-search-dictionary.git@main#egg=websearchdict
+pip install websearchdict
 ```
 
 ## Example Usage
