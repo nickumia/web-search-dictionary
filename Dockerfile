@@ -26,7 +26,7 @@ RUN curl -f -L https://github.com/mozilla/geckodriver/releases/download/${GECKOD
 	&& mv geckodriver /usr/bin/
 
 # Dependencies
-COPY requirements.txt dev-requirements.txt setup.py /boc/
+COPY requirements.txt dev-requirements.txt pyproject.toml README.md /boc/
 COPY websearchdict/ /boc/websearchdict/
 
 RUN pip install --no-cache-dir -r requirements.txt -r dev-requirements.txt

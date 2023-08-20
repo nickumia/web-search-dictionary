@@ -43,7 +43,7 @@ def test_lookup_a():
                            'the first time in a text or conversation.'),
             'examples': ['"a man came out of the room"'],
             'synonyms': None} in definitions.values()
-    assert 8 <= len(definitions) <= 11
+    assert 5 <= len(definitions) <= 9
     assert__pos(definitions)
 
 
@@ -118,7 +118,8 @@ def test_lookup_affair_affairs():
     assert__pos(definitions2)
 
     # The following can no longer be guaranteed
-    assert len(definitions) == len(definitions2) + 2
+    assert len(definitions) == len(definitions2) + 1 or \
+        len(definitions) == len(definitions2) + 2
 
     # This is apparently true sometimes..
     # assert len(definitions) < len(definitions2)

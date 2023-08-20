@@ -1,0 +1,82 @@
+---
+name: Publish to PyPI
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+  workflow_dispatch:
+    inputs:
+      version_no:
+        description: 'Release Version:'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      hash: ${{ steps.hash.outputs.hash }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+          cache: 'pip'
+      - name: Update pyproject.toml if manual release
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          sed -i "s/version = \"[0-9]\{1,2\}.[0-9]\{1,4\}.[0-9]\{1,4\}\"/version = \"${{github.event.inputs.version_no}}\"/g" pyproject.toml
+      - run: python -m pip install build
+      # Use the commit date instead of the current date during the build.
+      - run: echo "SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)" >> $GITHUB_ENV
+      - run: |
+          python -m build --sdist
+          python -m build --wheel
+      # Generate hashes used for provenance.
+      - name: generate hash
+        id: hash
+        run: cd dist && echo "hash=$(sha256sum * | base64 -w0)" >> $GITHUB_OUTPUT
+      - uses: actions/upload-artifact@v3
+        with:
+          path: ./dist
+  provenance:
+    needs: ['build']
+    permissions:
+      actions: read
+      id-token: write
+      contents: write
+    # Can't pin with hash due to how this workflow works.
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.7.0
+    with:
+      base64-subjects: ${{ needs.build.outputs.hash }}
+  create-release:
+    # Upload the sdist, wheels, and provenance to a GitHub release. They remain
+    # available as build artifacts for a while as well.
+    needs: ['provenance']
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v3
+      - name: create release
+        run: >
+          gh release create --draft --repo ${{ github.repository }}
+          ${{ github.ref_name }}
+          *.intoto.jsonl/* artifact/*
+        env:
+          GH_TOKEN: ${{ github.token }}
+  pypi:
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+    needs: ['build']
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          path: dist/
+      - name: pypi-publish
+        uses: pypa/gh-action-pypi-publish@v1.8.8
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          packages-dir: dist/artifact/
+

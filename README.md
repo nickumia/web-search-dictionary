@@ -1,13 +1,18 @@
 [![Tests](https://github.com/nickumia/web-search-dictionary/actions/workflows/commit.yml/badge.svg)](https://github.com/nickumia/web-search-dictionary/actions/workflows/commit.yml)
+[![PyPI version](https://badge.fury.io/py/websearchdict.svg)](https://badge.fury.io/py/websearchdict)
 
 # web-search-dictionary
 A Definition Lookup API based on Google Search Results
 
+Since there are a lack of Dictionary APIs, I was forced to attempt
+to create my own.  I am simply supplying the source code, not a
+service or product.  If you've searched as hard as the rest of us
+for a good Dictionary API, hopefully this can help! 😄
+
 ## Installation
 
-Currently, the project is not published on PyPI (maybe in the near future).  To install, run the following
 ```
-pip install git+https://github.com/nickumia/web-search-dictionary.git@main#egg=websearchdict
+pip install websearchdict
 ```
 
 ## Example Usage
