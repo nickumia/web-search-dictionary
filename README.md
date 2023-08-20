@@ -3,6 +3,11 @@
 # web-search-dictionary
 A Definition Lookup API based on Google Search Results
 
+Since there are a lack of Dictionary APIs, I was forced to attempt
+to create my own.  I am simply supplying the source code, not a
+service or product.  If you've searched as hard as the rest of us
+for a good Dictionary API, hopefully this can help! 😄
+
 ## Installation
 
 Currently, the project is not published on PyPI (maybe in the near future).  To install, run the following
