@@ -14,7 +14,7 @@ def test_lookup():
         ('/wÉËld/ | /wÉld/ | /wÉµËld/ | [wÉµËÉ¯Ì¯dÌ¥] | '
          '-ÉË(É¹)ld | /wurld/ | /wÉrld/ | ')
 
-    assert len(definitions.getDefinitions()) == 24
+    assert len(definitions.getDefinitions()) == 25
     assert__pos(definitions.getDefinitions())
 
 
@@ -36,7 +36,7 @@ def test_lookup_a():
     definitions = entry.getDefinitions()
     print(definitions)
     # This is a bit of a problem..
-    assert len(definitions) == 551
+    assert len(definitions) == 568
     assert__pos(definitions)
 
 

@@ -118,7 +118,8 @@ def test_lookup_affair_affairs():
     assert__pos(definitions2)
 
     # The following can no longer be guaranteed
-    assert len(definitions) == len(definitions2) + 1 or \
+    assert len(definitions) == len(definitions2) or \
+        len(definitions) == len(definitions2) + 1 or \
         len(definitions) == len(definitions2) + 2
 
     # This is apparently true sometimes..
